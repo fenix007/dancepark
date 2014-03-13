@@ -1,0 +1,12 @@
+{% extends 'CommonBundle:Default/admin:admin_show.html.twig' %}
+
+
+{% set title = 'label.secret_question.show' %}
+{% set admin = 'secret_question' %}
+
+{% block table_body %}
+    <tr>
+        <th>{{ 'label.question'|trans }}</th>
+        <td>{{ entity.question }}</td>
+    </tr>
+{% endblock %}

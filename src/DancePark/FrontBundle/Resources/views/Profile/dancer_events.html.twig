@@ -1,0 +1,82 @@
+{% extends 'CommonBundle:Default:layout.html.twig' %}
+
+{% block script_container %}
+    {{ parent() }}
+    {% javascripts
+    '@FrontBundle/Resources/public/js/event.js'
+    output='event.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block style_container %}
+    {{ parent() }}
+    {% stylesheets
+    '@FrontBundle/Resources/public/css/*'
+    filter='cssrewrite'
+    output='front.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body_container %}
+    <div id="profile-wrap">
+        <div class="container user-profile edit-profile">
+            {% block info_content %}
+            <div class="dancer-main-content">
+                {% block left_sidebar %}
+                    <div class="left-sidebar fl-l">
+                        <div class="dancer-photo" style="overflow: hidden;">
+                            {% if dancer.photo %}
+                                <img id="dancer-photo" style="position: relative;" src="{{ dancer.webPath|apply_filter('220x220') }}" />
+                            {% endif %}
+                        </div>
+                        {% include 'FrontBundle:Profile:profile_link_block.html.twig' %}
+                    </div>
+                {% endblock %}
+                <div class="center fl-r">
+                    {% if dancer_events|length > 0 %}
+                        <table id="dancer-events" border="1">
+                            <thead>
+                            <tr>
+                                <th>Название события</th>
+                                <th>Название организации</th>
+                                <th>Аддрес</th>
+                                <th>Дата</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for dancer_event in dancer_events %}
+                                {% set event = dancer_event.event %}
+                            <tr>
+                                <td><a href="{{ path('event_view', {id: event.id}) }}">{{ event.name }}</a></td>
+                                <td>
+                                    {% for org in event.organizations %}
+                                        <div class="event-organization"><a href="{{ path('organization_view', {id: org.id}) }}">{{ org.name }}</a></div>
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {{ event.place.address }}
+                                </td>
+                                <td>
+                                    {{ dancer_event.date|date('d.m.Y') }}
+                                </td>
+                                <td><a href="{{ path('api_unjoin_event', {eventId: dancer_event.id }) }}">{{ 'label.unjoin_event'|trans }}</a></td>
+                            </tr>
+                            {% endfor %}
+                            </tr>
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="">{{ 'label.no_dancer_events'|trans }}</div>
+                    {% endif %}
+                </div>
+            <div class="cl-b"></div>
+        </div>
+        {% endblock %}
+    </div>
+    </div> <!-- End profile-wrap -->
+{% endblock %}

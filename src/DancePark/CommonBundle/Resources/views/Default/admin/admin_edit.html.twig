@@ -1,0 +1,27 @@
+{% extends 'CommonBundle:Default/admin:admin_layout.html.twig' %}
+
+{% block script_container %}
+    {{ parent() }}
+    {{ form_javascript(edit_form) }}
+{% endblock %}
+
+{% block body_container %}
+    <h1>{{ title|trans() }}</h1>
+
+    <form action="{{ path(admin ~ '_update', { 'id': entity.id }) }}" method="post" class="form-horizontal" {{ form_enctype(edit_form) }}>
+        <input type="hidden" name="_method" value="PUT" />
+        {% block form_fields %}
+            {{ form_widget(edit_form) }}
+        {% endblock %}
+        <button type="submit" class="btn btn-primary">{{ 'label.edit'|trans() }}</button>
+        <a href="{{ path(admin) }}" class="btn">
+            {{ 'label.to_list'|trans() }}
+        </a>
+    </form>
+    <form action="{{ path(admin ~ '_delete', { 'id': entity.id }) }}" method="post">
+        <input type="hidden" name="_method" value="DELETE" />
+        {{ form_widget(delete_form) }}
+        <button type="submit" class="btn btn-danger">{{ 'label.delete'|trans() }}</button>
+    </form>
+
+{% endblock %}

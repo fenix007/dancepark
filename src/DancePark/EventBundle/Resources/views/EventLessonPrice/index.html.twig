@@ -1,0 +1,16 @@
+{% extends 'CommonBundle:Default/admin:admin_index.html.twig' %}
+
+{% set admin = 'event_lesson_price' %}
+{% set title = 'label.lesson_price.index' %}
+{% block thead %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <th>{{ 'label.lesson'|trans }}</th>
+        <th>{{ 'label.price'|trans }}</th>
+        <th>{{ 'label.actions'|trans }}</th>
+    </tr>
+{% endblock %}
+{% block custom_fields %}
+    <td>{{ entity.lesson }}</td>
+    <td>{{ entity.price }}</td>
+{% endblock %}

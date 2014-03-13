@@ -1,0 +1,84 @@
+{% block header %}
+    <div id="header" class="header-container">
+        <div class="header-top">
+            {% block contact_links %}
+                {% include 'CommonBundle:Default:contact_links.html.twig' %}
+            {% endblock %}
+            {% block user_liks %}
+                <div class="user-links fl-l">
+                    {% if twig_render_info.user %}
+                        <div class="profile-links">
+                            <span><a href="{{ path('dancer_view', {id: twig_render_info.user.id}) }}"><img src="/files/public/images/commonimg/view_profile_btn.png" title="{{ 'label.see_profile'|trans() }}">{% if not twig_render_info.user.firstName %}{{ twig_render_info.user.email }}{% else %}{{ twig_render_info.user.firstName }} {{ twig_render_info.user.lastName }}{% endif %}</a></span>
+                            <span><a href="{{ path('dancer_edit', {id: twig_render_info.user.id}) }}"><img src="/files/public/images/commonimg/edit_profile_btn.png" title="{{ 'label.edit_profile'|trans() }}"></a></span>
+                        </div>
+                    {% else %}
+                        <div class="login-or-reg">
+                            <div class="zamok fl-l"></div>
+                            <a href='#' class="login">
+                                <span>{{ 'label.input_user_name'|trans() }}</span>
+                            </a>
+                            {{ 'label.or'|trans() }}
+                            <a href="#" class="register">
+                                <span>{{ 'label.registration'|trans() }}</span>
+                            </a>
+                            <div class="cl-b"></div>
+                        </div>
+                        <div class="forms">
+                            <div class="login-form a-form"></div>
+                            <div class="register-form a-form"></div>
+                            <div class="register-approved d-none">{{ 'label.register_approved'|trans() }}</div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endblock %}
+            {#{% block choose_city %}#}
+                {#<div class="choose-city fl-r">#}
+                    {#<div class="current-city">Москва</div>#}
+                    {#<div class="city-list fl-r">Выбор города</div>#}
+                {#</div>#}
+            {#{% endblock %}#}
+        </div>
+        <div class="header-main">
+            <div class="logo fl-l">
+                <a href="/">
+                    <img src="/files/public/images/common/logo-header.png">
+                </a>
+            </div>
+            <div class="subscription fl-l">
+                <a class="subscribe-btn" href="{{ path('get_digest_form') }}">
+                    <span class="subscriber-img">{{ 'label.subscribe'|trans() }}</span>
+                    <span class="subscriber-label">{{ 'label.subscribe_slogan'|trans() }}</span>
+                </a>
+                <div class="digest_forms"></div>
+                <div class="subs-approved d-none"><span>{{ 'label.subscription_approved'|trans() }}</span></div>
+            </div>
+            <div class="quick-filter fl-r">
+                {#<div class="create-event">#}
+                    {#<a href="">{{ 'label.create_event'|trans() }}</a>#}
+                {#</div>#}
+                <div class="how-work">
+                    <a href="{{ path('page_action', {path: 'faq'}) }}">{{ 'label.how_work'|trans() }}</a>
+                </div>
+                <form action="{{ path('front') }}" id="quick_filter_form" method="post">
+                    {% if quick_form is not defined %}
+                        {% set quick_form = twig_render_info.quickForm %}
+                    {% endif %}
+                    <div class="quick_filter fl-r">
+                        <div class="inputs">
+                            {{ form_widget(quick_form.q, { 'attr': {'placeholder': 'Быстрый поиск событий'} }) }}
+                        </div>
+                        <div class="links">
+                            {% for link in twig_render_info.quickLinks %}
+                                <a href="{{ path('front', { q: link|trans }) }}">{{ link|trans() }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {{ form_rest(quick_form) }}
+                    <input type="submit" class="filter-form-submit d-none" value="{{ 'Send'|trans() }}" />
+                    <div class="cl-b"></div>
+                </form>
+            </div>
+            <div class="cl-b"></div>
+        </div>
+    </div>
+{% endblock %}

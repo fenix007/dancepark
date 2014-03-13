@@ -1,0 +1,14 @@
+{% extends 'CommonBundle:Default/admin:admin_index.html.twig' %}
+
+{% set admin = 'secret_question' %}
+{% set title = 'label.secret_question.index' %}
+{% block thead %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <th>{{ 'label.question'|trans }}</th>
+        <th>{{ 'label.actions'|trans }}</th>
+    </tr>
+{% endblock %}
+{% block custom_fields %}
+    <td>{{ entity.question }}</td>
+{% endblock %}

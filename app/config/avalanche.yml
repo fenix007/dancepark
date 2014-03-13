@@ -1,0 +1,26 @@
+avalanche_imagine:
+    filters:
+        120x120:
+                    type:    thumbnail
+                    options: { size: [120, 120], mode: outbound }
+        220x220:
+                    type: thumbnail
+                    options: { size: [220, 220], mode: outbound }
+        240x240:
+                    type:    thumbnail
+                    options: { size: [240, 240], mode: outbound }
+        600x480:
+                    type:    thumbnail
+                    options: { size: [600, 480], mode: outbound }
+        960x255:
+                    type:    thumbnail
+                    options: { size: [960, 255], mode: outbound }
+        175x155:
+                    type: thumbnail
+                    options: { size: [175, 155], mode: outbound }
+        89x47:
+                    type: thumbnail
+                    options: { size: [89, 47], mode: outbound }
+        130x80:
+                    type: thumbnail
+                    options: { size: [130, 80], mode: outbound }

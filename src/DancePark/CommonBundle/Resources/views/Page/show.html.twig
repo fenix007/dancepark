@@ -1,0 +1,20 @@
+{% extends 'CommonBundle:Default/admin:admin_show.html.twig' %}
+
+
+{% set title = 'label.page.show' %}
+{% set admin = 'page' %}
+
+{% block table_body %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <td>{{ entity.id }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.title'|trans }}</th>
+        <td>{{ entity.title }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.text'|trans }}</th>
+        <td>{{ entity.text }}</td>
+    </tr>
+{% endblock %}

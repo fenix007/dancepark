@@ -1,0 +1,28 @@
+{% block header %}
+    <div id="header" class="header-container container">
+        <div class="header-top container">
+        </div>
+        <div class="header-main container">
+            <div class="logo fl-l"></div>
+            <div class="subscription fl-l"></div>
+            <div class="quick-filter fl-l">
+                <form action="" id="quick_filter_form" method="post">
+                    <div class="container quick_filter fl-l">
+                        <div class="inputs">
+                            {{ form_widget(quick_form.q) }}
+                        </div>
+                        <div class="links">
+                            {% for name in quick_links %}
+                                <a href="{{ path("front", {q:name|trans()}) }}">{{ name|trans() }}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {{ form_rest(quick_form) }}
+                    <input type="submit" class="filter-form-submit" value="{{ 'Send'|trans() }}" />
+                    <div class="cl-b"></div>
+                </form>
+            </div>
+            <div class="cl-b"></div>
+        </div>
+    </div>
+{% endblock %}

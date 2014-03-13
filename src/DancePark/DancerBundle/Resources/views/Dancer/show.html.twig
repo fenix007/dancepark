@@ -1,0 +1,72 @@
+{% extends 'CommonBundle:Default/admin:admin_show.html.twig' %}
+
+
+{% set title = 'label.dancer.show' %}
+{% set admin = 'admin_dancer' %}
+
+{% block table_body %}
+    <tr>
+        <th>{{ 'label.firstname'|trans }}</th>
+        <td>{{ entity.firstName }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.lastname'|trans }}</th>
+        <td>{{ entity.lastName }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.photo'|trans }}</th>
+        <td><img src="{{ entity.webPath }}" width=100 /></td>
+    </tr>
+    <tr>
+        <th>{{ 'label.email'|trans }}</th>
+        <td>{{ entity.email }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.enabled'|trans }}</th>
+        <td>{{ entity.enabled }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.last_login'|trans }}</th>
+        <td>{{ entity.lastLogin|date('Y-m-d H:i:s') }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.locked'|trans }}</th>
+        <td>{{ entity.locked }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.expired'|trans }}</th>
+        <td>{{ entity.expired }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.roles'|trans }}</th>
+        <td>{{ entity.roles }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.birthday'|trans }}</th>
+        <td>{{ entity.birthday|date('Y-m-d H:i:s') }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.phone1'|trans }}</th>
+        <td>{{ entity.phone1 }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.phone2'|trans }}</th>
+        <td>{{ entity.phone2 }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.biography'|trans }}</th>
+        <td>{{ entity.biography }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.short_over_view'|trans }}</th>
+        <td>{{ entity.shortOverview }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.secret_question'|trans }}</th>
+        <td>{{ entity.secretQuestion }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.secret_answer'|trans }}</th>
+        <td>{{ entity.secretAnswer }}</td>
+    </tr>
+{% endblock %}

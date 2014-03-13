@@ -1,0 +1,22 @@
+{% extends 'CommonBundle:Default/admin:admin_layout.html.twig' %}
+
+{% block script_container %}
+    {{ parent() }}
+    {{ form_javascript(form) }}
+{% endblock %}
+
+{% block body_container %}
+    <h1>{{ title|trans() }}</h1>
+
+    <form action="{{ path(admin ~ '_create', { 'id': entity.id }) }}" class="form-horizontal" method="post" {{ form_enctype(form) }}>
+        <input type="hidden" name="_method" value="POST" />
+        {% block form_fields %}
+           {{ form_widget(form) }}
+        {% endblock %}
+        <button type="submit" class="btn btn-primary">{{ "Create"|trans() }}</button>
+        <a href="{{ path(admin) }}" class="btn">
+            {{ 'label.to_list'|trans() }}
+        </a>
+    </form>
+
+{% endblock %}

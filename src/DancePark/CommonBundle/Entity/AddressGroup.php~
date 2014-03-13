@@ -1,0 +1,220 @@
+<?php
+
+namespace DancePark\CommonBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+/**
+ * AddressGroup
+ *
+ * @Gedmo\Tree(type="nested")
+ * @ORM\Table(name="address_group")
+ * @ORM\Entity(repositoryClass="DancePark\CommonBundle\Entity\AddressGroupRepository")
+ */
+class AddressGroup
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\Length(max=255, maxMessage="error.length255")
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="prefix", type="string", length=255)
+     * @Assert\Length(max=255, maxMessage="error.length255")
+     */
+    private $prefix;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="suffix", type="string", length=255)
+     * @Assert\Length(max=255, maxMessage="error.length255")
+     */
+    private $suffix;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="DancePark\CommonBundle\Entity\AddressLevel")
+     */
+    private $addressLevel;
+
+    /**
+     * @Gedmo\TreeLeft
+     * @ORM\Column(name="lft", type="integer")
+     */
+    private $lft;
+
+    /**
+     * @Gedmo\TreeLevel
+     * @ORM\Column(name="lvl", type="integer")
+     */
+    private $lvl;
+
+    /**
+     * @Gedmo\TreeRight
+     * @ORM\Column(name="rgt", type="integer")
+     */
+    private $rgt;
+
+    /**
+     * @Gedmo\TreeRoot
+     * @ORM\Column(name="root", type="integer", nullable=true)
+     */
+    private $root;
+
+    /**
+     * @Gedmo\TreeParent
+     * @ORM\ManyToOne(targetEntity="DancePark\CommonBundle\Entity\AddressGroup", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="DancePark\CommonBundle\Entity\AddressGroup", mappedBy="parent")
+     * @ORM\OrderBy({"lft" = "ASC"})
+     */
+    private $children;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return AddressGroup
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set prefix
+     *
+     * @param string $prefix
+     * @return AddressGroup
+     */
+    public function setPrefix($prefix)
+    {
+        $this->prefix = $prefix;
+    
+        return $this;
+    }
+
+    /**
+     * Get prefix
+     *
+     * @return string 
+     */
+    public function getPrefix()
+    {
+        return $this->prefix;
+    }
+
+    /**
+     * Set suffix
+     *
+     * @param string $suffix
+     * @return AddressGroup
+     */
+    public function setSuffix($suffix)
+    {
+        $this->suffix = $suffix;
+    
+        return $this;
+    }
+
+    /**
+     * Get suffix
+     *
+     * @return string 
+     */
+    public function getSuffix()
+    {
+        return $this->suffix;
+    }
+
+    /**
+     * Set addressLevel
+     *
+     * @param integer $addressLevel
+     * @return AddressGroup
+     */
+    public function setAddressLevel($addressLevel)
+    {
+        $this->addressLevel = $addressLevel;
+    
+        return $this;
+    }
+
+    /**
+     * Get addressLevel
+     *
+     * @return integer 
+     */
+    public function getAddressLevel()
+    {
+        return $this->addressLevel;
+    }
+
+    /**
+     * Set leaf parent
+     *
+     * @param null $parent
+     * @return AddressGroup
+     */
+    public function setParent($parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get leaf parent
+     *
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+}

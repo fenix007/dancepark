@@ -1,0 +1,29 @@
+{% extends 'CommonBundle:Default/admin:admin_new.html.twig' %}
+
+{% block script_container %}
+    {{ parent() }}
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key={{ gmap_api_key }}&sensor=false">
+    </script>
+{% endblock %}
+
+{% set title = 'label.metro_station.new' %}
+{% set admin = 'metro_station' %}
+
+{% block body_container %}
+    {{ parent() }}
+{% endblock %}
+
+{% block form_fields %}
+    {{ form_row(form.name) }}
+    <div class="container coords_container">
+        {% include 'CommonBundle:Default/admin:gmap_field.html.twig' %}
+        <div class="latitude">
+            {{ form_row(form.latitude) }}
+        </div>
+        <div class="longtitude">
+            {{ form_row(form.longtitude) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
+{% endblock %}

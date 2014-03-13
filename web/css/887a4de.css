@@ -1,0 +1,55 @@
+.header-top {
+    height: 30px;
+}
+
+.header-container .logo {
+    width: 200px;
+    height: 70px;
+}
+
+.header-container .subscription {
+    width: 500px;
+    height: 70px;
+}
+
+.header-container .quick_filter {
+    width: 300px;
+}
+
+#filters-container .form_top .address_filter {
+    width: 800px;
+}
+
+#filters-container .form_top .address_filter input {
+    width: 700px;
+}
+
+#filters-container .form_top .options {
+    width: 200px;
+}
+
+#filters-container .sub_top .date_filter {
+    width: 450px;
+}
+#filters-container .sub_top .time_filter,
+#filters-container .sub_top .price_filter {
+    width: 350px;
+}
+
+#filters-container .event_type_filter {
+    padding-top: 30px;
+}
+
+#filters-container .event_type_filter .group {
+    width: 370px;
+}
+
+#filters-container .dance_type_filter {
+    padding-top: 30px;
+}
+#filters-container .dance_type_filter .group .control-group {
+    width: 200px;
+}
+
+
+

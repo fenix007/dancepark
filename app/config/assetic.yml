@@ -1,0 +1,8 @@
+# Assetic Configuration
+assetic:
+    debug:          %kernel.debug%
+    use_controller: true
+    bundles:        [ CommonBundle, FrontBundle, DancerBundle, FOSUserBundle ]
+    #java: /usr/bin/java
+    filters:
+        cssrewrite: ~

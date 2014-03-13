@@ -1,0 +1,30 @@
+{% extends 'CommonBundle:Default/admin:admin_layout.html.twig' %}
+
+{% block body_container %}
+    <h1>{% if title is defined %}{{ title|trans() }}{% else %}{{ 'label.admin'|trans() }}{% endif %}</h1>
+
+    <a href="{{ path(admin ~ '_new') }}" class="btn btn-primary">
+        {{ 'label.create'|trans() }}
+    </a>
+    <table class="records_list table table-hower">
+        {% block table_content %}
+            <thead>
+            {% block thead %}
+            {% endblock %}
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td><a href="{{ path(admin ~ '_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    {% block custom_fields %}
+                    {% endblock %}
+                    <td>
+                        <a href="{{ path(admin ~ '_show', { 'id': entity.id }) }}" class="btn btn-success">{{ 'label.show'|trans }}</a>
+                        <a href="{{ path(admin ~ '_edit', { 'id': entity.id }) }}" class="btn btn-info">{{ 'label.edit'|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endblock %}
+        </tbody>
+    </table>
+{% endblock %}

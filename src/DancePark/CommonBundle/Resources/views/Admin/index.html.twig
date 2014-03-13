@@ -1,0 +1,16 @@
+{% extends 'CommonBundle:Default/admin:admin_layout.html.twig' %}
+
+{% block body_container %}
+    <h1>Admin links list</h1>
+
+    <div class="container">
+        <div class="span8">
+            <ul class="nav pills">
+                {% for item in menu %}
+                    <li><a href="{{ item.link }}">{{ item.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

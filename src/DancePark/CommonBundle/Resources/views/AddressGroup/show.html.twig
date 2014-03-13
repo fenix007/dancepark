@@ -1,0 +1,36 @@
+{% extends 'CommonBundle:Default/admin:admin_show.html.twig' %}
+
+
+{% set title = 'label.address_group.show' %}
+{% set admin = 'admin_address_group' %}
+
+{% block table_body %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <td>{{ entity.id }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.name'|trans }}</th>
+        <td>{{ entity.name }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.prefix'|trans }}</th>
+        <td>{{ entity.prefix }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.lft'|trans }}</th>
+        <td>{{ entity.lft }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.lvl'|trans }}</th>
+        <td>{{ entity.lvl }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.rgt'|trans }}</th>
+        <td>{{ entity.rgt }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.root'|trans }}</th>
+        <td>{{ entity.root }}</td>
+    </tr>
+{% endblock %}

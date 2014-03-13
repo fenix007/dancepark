@@ -1,0 +1,15 @@
+{% extends 'CommonBundle:Default/admin:admin_new.html.twig' %}
+
+{% set title = 'label.event.new' %}
+{% set admin = 'admin_event' %}
+
+{% block script_container %}
+    {{ parent() }}
+    <script src="{{ asset("bundles/mopabootstrap/js/mopabootstrap-collection.js") }}"></script>
+    <script src="{{ asset("bundles/mopabootstrap/js/eyecon-bootstrap-datepicker.js") }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            CKEDITOR.replace( 'dancepark_eventbundle_eventtype_teachers' );
+        });
+    </script>
+{% endblock %}

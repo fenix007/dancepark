@@ -1,0 +1,52 @@
+{% extends 'CommonBundle:Default/admin:admin_show.html.twig' %}
+
+
+{% set title = 'label.organization.show' %}
+{% set admin = 'admin_organization' %}
+
+{% block table_body %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <td>{{ entity.id }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.name'|trans }}</th>
+        <td>{{ entity.name }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.logo'|trans }}</th>
+        <td><img src="{{ entity.webPath }}" width=100 /></td>
+    </tr>
+    <tr>
+        <th>{{ 'label.type'|trans }}</th>
+        <td>{{ entity.type }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.short_description'|trans }}</th>
+        <td>{{ entity.shortDescription }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.description'|trans }}</th>
+        <td>{{ entity.description }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.date_of_incorporation'|trans }}</th>
+        <td>{{ entity.dateOfIncorporation|date('Y-m-d H:i:s') }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.web_url'|trans }}</th>
+        <td>{{ entity.webUrl }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.phone1'|trans }}</th>
+        <td>{{ entity.phone1 }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.phone2'|trans }}</th>
+        <td>{{ entity.phone2 }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.email'|trans }}</th>
+        <td>{{ entity.email }}</td>
+    </tr>
+{% endblock %}

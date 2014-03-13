@@ -1,0 +1,35 @@
+{% extends "CommonBundle:Default:html_layout.html.twig" %}
+{% block style_container %}
+    <link href="{{ asset("bundles/common/twitter_bootstrap/css/bootstrap.min.css") }}" rel="stylesheet">
+    <link href="{{ asset("bundles/common/twitter_bootstrap/css/bootstrap-responsive.min.css") }}" rel="stylesheet">
+    {% stylesheets '@CommonBundle/Resources/public/css/*'  %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+{% block script_container %}
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key={{ gmap_api_key }}&libraries=geometry&sensor=false&language=RU">
+    </script>
+    {% javascripts
+        '@CommonBundle/Resources/public/js/jquery-1.10.2.min.js'
+        '@CommonBundle/Resources/public/js/jquery-ui.min.js'
+        '@CommonBundle/Resources/public/js/jquery.ui.autocomplete.min.js'
+        '@CommonBundle/Resources/public/js/jquery.ui.addresspicker.js'
+        '@CommonBundle/Resources/public/js/jquery.ui.dialog.min.js'
+        '@CommonBundle/Resources/public/js/jquery.ui.slider.min.js'
+        '@CommonBundle/Resources/public/js/jquery.scrollTo-1.4.3.1-min.js'
+        '@CommonBundle/Resources/public/js/jquery.ui.timepicker.js'
+        '@CommonBundle/Resources/public/js/common.js'
+        '@CommonBundle/Resources/public/twitter_bootstrap/js/*'
+        output="default"
+        %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block header %}
+    {% include 'CommonBundle:Default:header.html.twig' %}
+{% endblock %}
+{% block footer %}
+    {% include 'CommonBundle:Default:footer.html.twig' %}
+{% endblock %}

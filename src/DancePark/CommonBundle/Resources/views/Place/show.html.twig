@@ -1,0 +1,60 @@
+{% extends 'CommonBundle:Default/admin:admin_show.html.twig' %}
+
+
+{% set title = 'label.place.show' %}
+{% set admin = 'place' %}
+
+{% block table_body %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <td>{{ entity.id }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.name'|trans }}</th>
+        <td>{{ entity.name }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.logo'|trans }}</th>
+        <td><img src="{{ entity.webPath }}" width=100 /></td>
+    </tr>
+    <tr>
+        <th>{{ 'label.address'|trans }}</th>
+        <td>{{ entity.address }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.latitude'|trans }}</th>
+        <td>{{ entity.latitude }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.longtitude'|trans }}</th>
+        <td>{{ entity.longtitude }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.description_togo'|trans }}</th>
+        <td>{{ entity.descriptionTogo }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.web_url'|trans }}</th>
+        <td>{{ entity.webUrl }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.phone1'|trans }}</th>
+        <td>{{ entity.phone1 }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.phone2'|trans }}</th>
+        <td>{{ entity.phone2 }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.email'|trans }}</th>
+        <td>{{ entity.email }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.addoptions'|trans }}</th>
+        <td>{{ entity.addOptions }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.addevent'|trans }}</th>
+        <td>{{ entity.addEvent }}</td>
+    </tr>
+{% endblock %}

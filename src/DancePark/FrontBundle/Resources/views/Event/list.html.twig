@@ -1,0 +1,32 @@
+{% extends 'CommonBundle:Default:layout.html.twig' %}
+
+{% block style_container %}
+    {{ parent() }}
+    {% stylesheets
+    '@FrontBundle/Resources/public/css/*'
+    filter='cssrewrite'
+    output='front.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body_container %}
+    <div class="article-list">
+        <div class="list">
+            {% for event in list %}
+                <div class="article">
+                    <a href="{{ path('event_view', {id: event.id}) }}">{{ event.name }}</a>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="pager">
+            {% if is_prev == true %}
+                <a href="{{ path('dancers_list', {page: page - 1}) }}">{{ 'label.prev_page'|trans }}</a>
+            {% endif %}
+            {% if is_next == true %}
+                <a href="{{ path('dancers_list', {page: page + 1}) }}">{{ 'label.next_page'|trans }}</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

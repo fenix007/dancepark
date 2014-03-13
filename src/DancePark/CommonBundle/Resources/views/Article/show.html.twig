@@ -1,0 +1,94 @@
+{% extends 'CommonBundle:Default/admin:admin_show.html.twig' %}
+
+
+{% set title = 'label.article.show' %}
+{% set admin = 'article' %}
+
+{% block table_body %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <td>{{ entity.id }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.title'|trans }}</th>
+        <td>{{ entity.title }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.body'|trans }}</th>
+        <td>{{ entity.body }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.event'|trans }}</th>
+        <td>{{ entity.event }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.organization'|trans }}</th>
+        <td>{{ entity.organization }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.place'|trans }}</th>
+        <td>{{ entity.place }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.dance_type'|trans }}</th>
+        <td>{{ entity.danceType }}</td>
+    </tr>
+{% endblock %}
+
+
+{% block body -%}
+    <h1>Article</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ entity.title }}</td>
+            </tr>
+            <tr>
+                <th>Body</th>
+                <td>{{ entity.body }}</td>
+            </tr>
+            <tr>
+                <th>Event</th>
+                <td>{{ entity.event }}</td>
+            </tr>
+            <tr>
+                <th>Organization</th>
+                <td>{{ entity.organization }}</td>
+            </tr>
+            <tr>
+                <th>Place</th>
+                <td>{{ entity.place }}</td>
+            </tr>
+            <tr>
+                <th>Dancetype</th>
+                <td>{{ entity.danceType }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('article') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('article_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('article_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% block result_list %}
+{% for event in events %}
+    <div class="row">
+        {% include 'FrontBundle:Front:events_list_item.html.twig' %}
+    </div>
+{% endfor %}
+    {% if not is_next %}
+        <div class="end"></div>
+    {% endif %}
+{% endblock %}

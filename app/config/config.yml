@@ -1,0 +1,35 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: fos.yml }
+    - { resource: doctrine.yml }
+    - { resource: mopa.yml }
+    - { resource: assetic.yml }
+    - { resource: twig.yml}
+    - { resource: avalanche.yml }
+    - { resource: genemu.yml }
+    - { resource: social_parameters.yml }
+
+framework:
+    #esi:             ~
+    translator:      { fallback: %locale% }
+    secret:          %secret%
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: %kernel.debug%
+    form:            true
+    csrf_protection: true
+    validation:      { enable_annotations: true }
+    templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
+    default_locale:  "%locale%"
+    trusted_proxies: ~
+    session:         ~
+    #router_proxy:   { path: /_proxy }
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: %mailer_transport%
+    host:      %mailer_host%
+    username:  %mailer_user%
+    password:  %mailer_password%
+    spool:     { type: memory }

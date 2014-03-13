@@ -1,0 +1,8 @@
+genemu_form:
+    select2: ~
+    autocomplete: ~
+    autocompleter: ~
+    tinymce:
+      enabled: true
+      theme:   modern
+      script_url: '/bundles/genemuform/tinymce/tinymce.min.js'

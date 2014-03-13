@@ -1,0 +1,33 @@
+{% extends 'CommonBundle:Default/admin:admin_edit.html.twig' %}
+
+{% set title = 'label.place.edit' %}
+{% set admin = 'place' %}
+
+{% block script_container %}
+    {{ parent() }}
+    {% javascripts
+        '@CommonBundle/Resources/public/js/address_service.js'
+        output='address_service.js'
+        %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script src="{{ asset("bundles/mopabootstrap/js/mopabootstrap-collection.js") }}"></script>
+    <script src="{{ asset("bundles/mopabootstrap/js/eyecon-bootstrap-datepicker.js") }}"></script>
+{% endblock %}
+
+{% block form_fields %}
+    {{ form_row(edit_form.name) }}
+    {{ form_row(edit_form.city_id) }}
+    {{ form_row(edit_form.addrGroup) }}
+    {{ form_widget(edit_form.address) }}
+    <div class="container coords_container">
+        {% include 'CommonBundle:Place:geocoding.html.twig' %}
+        <div class="latitude">
+            {{ form_row(edit_form.latitude) }}
+        </div>
+        <div class="longtitude">
+            {{ form_row(edit_form.longtitude) }}
+        </div>
+    </div>
+    {{ form_rest(edit_form) }}
+{% endblock %}

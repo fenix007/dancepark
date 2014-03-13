@@ -1,0 +1,8 @@
+{% block left_sidebar %}
+    <div class="dancer-menu">
+        <ul>
+            <li class="{% if app.request.get('_route') == 'dancer_edit' %}active{% else %}even{% endif %}"><a href="{{ path('dancer_edit', {id: dancer.id}) }}">{{ 'label.my_info'|trans() }}</a></li>
+            <li class="{% if app.request.get('_route') == 'dancer_events' %}active{% else %}even{% endif %}"><a href="{{ path('dancer_events', {id: dancer.id}) }}">{{ 'label.my_events'|trans() }}</a></li>
+        </ul>
+    </div>
+{% endblock %}

@@ -1,0 +1,263 @@
+{% extends 'CommonBundle:Default:layout.html.twig' %}
+
+{% block script_container %}
+    {{ parent() }}
+    {% javascripts
+    '@FrontBundle/Resources/public/js/event.js'
+    '@CommonBundle/Resources/public/js/fivestar/jquery.MetaData.js'
+    '@CommonBundle/Resources/public/js/fivestar/jquery.rating.js'
+    output='event_view.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block style_container %}
+    {{ parent() }}
+    {% stylesheets
+    '@FrontBundle/Resources/public/css/*'
+    '@CommonBundle/Resources/public/js/fivestar/jquery.rating.css'
+    filter='cssrewrite'
+    output='front.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+
+{% block body_container %}
+    <div id="event-show-wrap">
+    <div id="event-show">
+        <div class="left-side">
+            <div class="home-back">
+                {% if hash %}
+                    <a href="{{ path('front', {hash: hash}) }}">{{ 'label.back_to_home'|trans() }}</a>
+                {% else  %}
+                    <a href="{{ path('front') }}">{{ 'label.back_to_home'|trans() }}</a>
+                {% endif %}
+            </div>
+            {% if app.user is not null and is_granted('ROLE_EVENT_MANAGER') %}
+                <div class="edit-event">
+                    <a href="{{ path('admin_event_edit',{id: event.id} ) }}">Редактировать событие</a>
+                </div>
+            {% endif %}
+        </div>
+        <div class="main-content">
+            <div class="info-container">
+                <div class="top">
+                    <div class="caption fl-l">
+                        <div class="logo-event fl-l">
+                            {% if event.organizationLogo %}
+                                <div class="logo">
+                                    <img src="{{ event.organizationLogo|apply_filter('130x80') }}" />
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="event-name">
+                            <h1>{{ event.name }}</h1>
+                            {% if event.recommended %}
+                                <div class="event-recommended">
+                                    {{ 'label.event_recommended'|trans }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% if event.children %}
+                            <div class="children">{{ 'label.children'|trans }}</div>
+                        {% endif %}
+                        {% if event.abonement %}
+                            <div class="abonement">{{ 'label.abonement'|trans }}</div>
+                        {% endif %}
+                        {% if event.training %}
+                            <div class="dance-types-row">
+                                {% if event.danceType|length > 0 %}
+                                    <div class="label">
+                                        {{ 'label.dance_types'|trans }}
+                                    </div>
+                                    {% for type in event.danceType %}
+                                        <span class="type">{{ type.name }}</span>{% if loop.last != true %}, {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% if event.place %}
+                    <div class="contacts fl-l">
+                        {% if event.place.cityId %}
+                            <div class="city">{{ event.place.cityId.name }}</div>
+                        {% endif %}
+                            <div class="address fl-l">{{ event.place.address }}</div>
+                        <div class="phone fl-r">
+                            {% if event.place.phone1 %}
+                                    <span class="ph1">{{ event.place.phone1 }}</span>
+                                    {% if event.place.phone2 %}
+                                    <span class="ph2">{{ event.place.phone2 }}</span>
+                                    {% endif %}
+                            {% endif %}
+
+                            {% if twig_render_info.user %}
+                                <div class="join-event-container">
+                                    {% if joined.id is not defined %}
+                                        <a class="to-participate join-event" href="{{ path('api_join_event', {eventId: event.id}) }}">{{ 'label.join_me'|trans() }}</a>
+                                    {% else %}
+                                        <a class="to-participate join-event" href="{{ path('unjoin_event', {eventId: event.id}) }}">{{ 'label.unjoin_me'|trans() }}</a>
+                                    {% endif %}
+                                    <div class="event-joined d-none">{{ 'label.event_join_success'|trans() }}</div>
+                                    <div class="join-error d-none">{{ 'label.event_join_error'|trans() }}</div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="cl-b"></div>
+                <div class="bot">
+                    {% if event.training != true %}
+                        <div class="dance-types fl-l">
+                            {% if event.danceType|length > 0 %}
+                                <div class="title">
+                                    {{ 'label.dance_types'|trans }}
+                                </div>
+                                {% for type in event.danceType %}
+                                    <div class="type">{{ type.name }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="teachers fl-l">
+                            <div class="title">
+                                {{ 'label.teachers'|trans }}
+                            </div>
+                            {{ event.teachers|raw }}
+                        </div>
+                    {% endif %}
+                    <div class="work-time fl-l">
+                        <table>
+                        <tr class="title">
+                            <td colspan="3">
+                            {{ 'label.work-time'|trans }}
+                            </td>
+                        </tr>
+                        {% set workTime = event.workTime %}
+                        {% if workTime.single is defined %}
+                            <tr class="lesson">
+                            <td class="on fl-l">
+                            {% if workTime.single.labelDate is defined %}
+                                {{ workTime.single.labelDate|trans }}
+                            {% else %}
+                                {{ workTime.single.label|trans }}
+                            {% endif %}
+                            </td>
+                            <td class="divider fl-l">----------</td>
+                            <td class="time fl-r">
+                                {{ workTime.single.time }}
+                            </td>
+                            </tr>
+                        {% else %}
+                            {% for time,days in workTime %}
+                                <tr class="lesson">
+                                    <td class="on">
+                                    {% for day in days %}
+                                        {{ day|trans }}
+                                    {% endfor %}
+                                    </td>
+                                    <td class="divider"><div class="dashes"></div></td>
+                                    <td class="time">{{ time }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                        </table>
+                    </div>
+                    <div class="lesson-price fl-r">
+                        <table>
+                            <thead>
+                                <tr class="title">
+                                    <th colspan="3">
+                                    {{ 'label.lesson-price'|trans }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% set prices = event.prices %}
+                            {% if prices %}
+                                {% for lesson,price in prices %}
+                                    <tr class="lesson">
+                                        <td class="at">
+                                            {% if lesson|length > 5 %}
+                                                {{ lesson|trans }}
+                                            {% else %}
+                                                {% if lesson == 0 %}
+                                                    {% set lesson = 1 %}
+                                                {% endif %}
+                                                {% if lesson == 1 %}
+                                                    {{ 'label.lessons_count'|trans }}
+                                                {% else %}
+                                                    {{ 'label.lessons_count'|trans }}
+                                                {% endif %}
+                                                {{ lesson }}
+                                            {% endif %}
+                                        </td>
+                                        <td class="divider"><div class="dashes"></div></td>
+                                        <td class="price">
+                                            <span>{{ 'label.price'|trans }}</span>
+                                            {{ price }}
+                                        </td>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            {% if event.webPath %}
+                <div class="millde-block">
+                    <img src="{{ event.webPath|apply_filter('960x255') }}" />
+                </div>
+            {% endif %}
+            {% if event.description %}
+                <div class="event-description">
+                    {{ event.description }}
+                </div>
+            {% endif %}
+            {% if event.place %}
+                <div class='buttons'>
+                    {% if feedback_form %}
+                        <div class="feedback-form fl-l">
+                            <a href="#" class="feedback-open" data-action="{{ url('api_save_feedback', {id: event.id}) }}">{{ 'label.feedback'|trans }}</a>
+                            <div class="feedback-form-container">
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if event.place.howToGet %}
+                    <div class="how-to-get">
+                        <a href="#" class="how-to-get-open">{{ 'label.how_to_get'|trans }}</a>
+                        <div class="how-to-get-container">
+                            {% for item in event.place.howToGet %}
+                                {% if item.path is defined %}
+                                    <span class="label">
+                                        {{ item.path }}
+                                    </span>
+                                    <span class="info">
+                                        {{ item.text }}
+                                    </span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="map-block cl-b">
+                    <div id="event-map"
+                         data-title="{{ event.name }}"
+                         data-lat="{{ event.place.latitude }}"
+                         data-lng="{{ event.place.longtitude }}"
+                            ></div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    </div> <!-- End Event-show-wrap -->
+{% endblock %}

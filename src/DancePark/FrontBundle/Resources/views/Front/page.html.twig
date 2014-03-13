@@ -1,0 +1,37 @@
+{% extends 'CommonBundle:Default:layout.html.twig' %}
+{% block style_container %}
+    {{ parent() }}
+    {% stylesheets
+    '@FrontBundle/Resources/public/css/*'
+    filter='cssrewrite'
+    output='front.css'
+    %}
+
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block title %}
+    {{ page.title }}
+{% endblock %}
+
+{% block body_container %}
+    <div class="left-sidebar">
+        <div class="main-menu">
+            {% set current_path = path(app.request.attributes.get('_route'), {path: app.request.get('path')}) %}
+            {% for label,value in twig_render_info.getPagesMenu %}
+                <a href="{{ value }}" class="{% if current_path == value %}active{% else %}no-active{% endif %}">{{ label }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="content-main">
+        <div class="title">
+            <h1>
+                {{ page.title }}
+            </h1>
+        </div>
+        <div class="content">
+            {{ page.text|raw }}
+        </div>
+    </div>
+{% endblock %}

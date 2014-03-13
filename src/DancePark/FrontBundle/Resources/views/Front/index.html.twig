@@ -1,0 +1,148 @@
+{% extends 'CommonBundle:Default:layout.html.twig' %}
+
+{% block script_container %}
+    {{ parent() }}
+    {% javascripts
+        '@FrontBundle/Resources/public/js/markerclusterer_packed.js'
+        '@FrontBundle/Resources/public/js/markerwithlabel_packed.js'
+        '@CommonBundle/Resources/public/js/jQAllRangeSliders-min.js'
+        '@CommonBundle/Resources/public/js/jcarousellite_1.0.1.min.js'
+        output='marker_packed.js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {% javascripts
+        '@FrontBundle/Resources/public/js/front.js'
+        output='front.js'
+        %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {{ form_javascript(form) }}
+    {{ form_javascript(quick_form) }}
+{% endblock %}
+{% block style_container %}
+    {{ parent() }}
+    {% stylesheets
+    '@CommonBundle/Resources/public/css/jslider/classic.css'
+    filter='cssrewrite'
+    output='jslider.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    {% stylesheets
+        '@FrontBundle/Resources/public/css/*'
+        filter='cssrewrite'
+        output='front.css'
+        %}
+    
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+    {{ form_stylesheet(quick_form) }}
+    {{ form_stylesheet(form) }}
+{% endblock %}
+
+{% block body_container %}
+    <div class="front">
+        {% block top_filters %}
+                {% include "FrontBundle:Front:filters_form.html.twig" %}
+        {% endblock %}
+        {% block page_content %}
+            <div class="page-content">
+                {% block main_content %}
+                    <div>
+                        <div id="left-sidebar" class="fl-l tabbable">
+                            <ul class="nav nav-tabs">
+                                <li class="srch-tab{% if events|length > 0 %} active{% endif %}{% if events|length <= 0 %} d-none{% endif %}">
+                                    <a href="#searched" class="events-tab" data-toggle="tab">
+                                        {{ 'label.search_results'|trans() }}
+                                    </a>
+                                </li>
+                                {% if events|length <= 0 %}
+                                    <li class="tdy-tab active">
+                                        <a href="#today" class="events-tab" data-toggle="tab">
+                                            {{ 'label.events_today'|trans() }}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                            <div class="tab-content">
+                                <div id="searched" class="searched tab-pane{% if events|length > 0 %} active{% endif %}">
+                                    {% include 'FrontBundle:Api:result_block.html.twig' %}
+                                </div>
+
+                                {% if events|length == 0 %}
+                                    <div id="today" class="today tab-pane{% if events|length == 0 %} active{% endif %}">
+                                    {% if events_today|length > 0 %}
+                                        {% block events_today %}
+                                            {% set events = events_today %}
+                                            {% set is_next = is_next_today %}
+                                                <div class="data-list">
+                                                    {% include 'FrontBundle:Api:result_list.html.twig' %}
+                                                </div>
+                                                {% if is_next %}
+                                                <div><a id="load-today" class="btn btn-info" href="{{ path('get_next_page_today', {page: 1, hash: hash}) }}">{{ 'label.load_more'|trans() }}</a></div>
+                                                {% endif %}
+                                        {% endblock %}
+                                    {% else %}
+                                        <div class="block no-result">
+                                            {{ 'label.no_result'|trans() }}
+                                        </div>
+                                    {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% block map_conteiner %}
+                        <div class="map-container fl-r">
+                              <div id="main-map"></div>
+                        </div>
+                        {% endblock %}
+                        <div class="cl-b"></div>
+                    </div>
+                {% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+
+    {% block bottom_content %}
+        <div id="recommended-events-wrap">
+            <div id="recommended-events" class="container">
+                <div class="recommended-event-title">{{ 'label.recommended-event-title'|trans() }}</div>
+                <div class="prev fl-l"></div>
+                <div class="recommended-events fl-l" style="width: 900px;">
+                    <ul>
+                    {% for event in recommended %}
+                        <li>
+                            <div class="slider-row" style="height: 240px; width: 179px;">
+                                <div class="event-logo">
+                                    {% if event.outputLogo %}
+                                        <a href="{{ url('event_view', {id: event.id}) }}">
+                                            <img src="{{ event.outputLogo|apply_filter('175x155') }}" />
+                                            <div class="shadow"></div>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                <div class="name">
+                                    <a href="{{ url('event_view', {id: event.id}) }}">
+                                        {{ event.name }}
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                <div class="next fl-l"></div>
+                <div class="cl-b"></div>
+            </div>
+        </div>
+    {% endblock %}
+
+{% endblock %}
+{% block info_messages %}
+    {% if authorization_message %}
+        <div class="message message-default message-notice"><div class="close"></div>
+            <div class="message-text">{{ 'label.success_authorization'|trans }}</div>
+        </div>
+    {% endif %}
+{% endblock %}

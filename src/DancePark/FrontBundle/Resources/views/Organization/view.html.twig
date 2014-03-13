@@ -1,0 +1,98 @@
+{% extends 'CommonBundle:Default:layout.html.twig' %}
+
+{% block script_container %}
+    {{ parent() }}
+    {% javascripts
+    '@FrontBundle/Resources/public/js/event.js'
+    output='event.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+{% block style_container %}
+    {{ parent() }}
+    {% stylesheets
+    '@FrontBundle/Resources/public/css/*'
+    filter='cssrewrite'
+    output='front.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+
+{% block body_container %}
+    <div id="event-show">
+        <div class="left-side">
+            <div class="home-back">
+                <a href="{{ path('front') }}">{{ 'label.back_to_home'|trans() }}</a>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="info-container">
+                <div class="top">
+                    <div class="logo">
+                        <img src="{{ organization.webPath }}" />
+                    </div>
+                    <div class="caption">
+                        <h1>{{ organization.name }}</h1>
+                    </div>
+                    {% if organization.places %}
+                        {% for place in organization.places %}
+                            <div class="contacts">
+                                {% if place.cityId %}
+                                    <div class="city">{{ place.cityId.name }}</div>
+                                {% endif %}
+                                <div class="address">{{ place.address }}</div>
+                                {% if place.phone1 %}
+                                    <div class="phone">{{ place.phone1 }}</div>
+                                {% endif %}
+                                {% if place.phone2 %}
+                                    <div class="phone">{{ place.phone2 }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="bot">
+                    <div class="work-time">
+                        {% set workTime = organization.workTime %}
+                        {% for time,days in workTime %}
+                            <div class="lesson">
+                                <span class="on">
+                                {% for day in days %}
+                                    {{ day }}
+                                {% endfor %}
+                                </span>
+                                <span class="time">{{ time }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="lesson-price">
+                        {% set prices = organization.lessonPrices %}
+                        {% for id,data in prices %}
+                            {% if data.lesson is defined %}
+                                <div class="lesson">
+                                    <span class="at">
+                                        {{ data.lesson }}
+                                    </span>
+                                    <span class="price">
+                                        {{ data.price }}
+                                    </span>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% if feedback_form %}
+                <div class="feedback-form">
+                    <a href="#" class="feedback-open" data-action="{{ url('api_save_feedback', {id: event.id}) }}">{{ 'label.feedback'|trans }}</a>
+                    <div class="feedback-form-container">
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

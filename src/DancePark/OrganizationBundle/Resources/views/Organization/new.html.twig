@@ -1,0 +1,10 @@
+{% extends 'CommonBundle:Default/admin:admin_new.html.twig' %}
+
+{% set title = 'label.organization.new' %}
+{% set admin = 'admin_organization' %}
+
+{% block script_container %}
+    {{ parent() }}
+    <script src="{{ asset("bundles/mopabootstrap/js/mopabootstrap-collection.js") }}"></script>
+    <script src="{{ asset("bundles/mopabootstrap/js/eyecon-bootstrap-datepicker.js") }}"></script>
+{% endblock %}

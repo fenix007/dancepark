@@ -1,0 +1,32 @@
+{% extends 'CommonBundle:Default/admin:admin_show.html.twig' %}
+
+
+{% set title = 'label.user.show' %}
+{% set admin = 'admin_user' %}
+
+{% block table_body %}
+    <tr>
+        <th>{{ 'label.email'|trans }}</th>
+        <td>{{ entity.email }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.enabled'|trans }}</th>
+        <td>{{ entity.enabled }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.last_login'|trans }}</th>
+        <td>{{ entity.lastLogin|date('Y-m-d H:i:s') }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.locked'|trans }}</th>
+        <td>{{ entity.locked }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.expired'|trans }}</th>
+        <td>{{ entity.expired }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.roles'|trans }}</th>
+        <td>{{ entity.roles }}</td>
+    </tr>
+{% endblock %}

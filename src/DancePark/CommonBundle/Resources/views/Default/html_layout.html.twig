@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        {% block meta_tags_container %}
+            <title>{% block title %}{% if title is defined %}{{ title|trans() }}{% else %}{{ 'Welcome!'|trans }}{% endif %}{% endblock %}</title>
+        {% endblock %}
+        {% block style_container %}{% endblock %}
+        {% block script_container %}{% endblock %}
+    </head>
+    <body>
+        <div id="messages" class="system-messages">
+            <div class="shadow-box"></div>
+            {% block info_messages %}
+
+            {% endblock %}
+        </div>
+        <div class="top_bg">
+            {% block header %}{% endblock %}
+            {% block body_container %}
+            {% endblock %}
+        </div>
+            {% block footer %}{% endblock %}
+    </body>
+</html>

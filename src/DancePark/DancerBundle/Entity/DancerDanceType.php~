@@ -1,0 +1,178 @@
+<?php
+
+namespace DancePark\DancerBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * DancerDanceType
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="DancePark\DancerBundle\Entity\DancerDanceTypeRepository")
+ */
+class DancerDanceType
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var
+     *
+     * @ORM\ManyToOne(targetEntity="DancePark\DancerBundle\Entity\Dancer", inversedBy="id")
+     */
+    private $dancer;
+
+    /**
+     * @var
+     *
+     * @ORM\ManyToOne(targetEntity="DancePark\CommonBundle\Entity\DanceType", inversedBy="id")
+     */
+    private $danceType;
+
+    /**
+     * @var
+     *
+     * @ORM\Column(name="is_pro", type="boolean")
+     */
+    private $isPro;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set dancer
+     *
+     * @param integer $dancer
+     * @return DancerDanceType
+     */
+    public function setDancer($dancer)
+    {
+        $this->dancer = $dancer;
+    
+        return $this;
+    }
+
+    /**
+     * Get dancer
+     *
+     * @return integer 
+     */
+    public function getDancer()
+    {
+        return $this->dancer;
+    }
+
+    /**
+     * Set danceType
+     *
+     * @param integer $danceType
+     * @return DancerDanceType
+     */
+    public function setDanceType($danceType)
+    {
+        $this->danceType = $danceType;
+    
+        return $this;
+    }
+
+    /**
+     * Get danceType
+     *
+     * @return integer 
+     */
+    public function getDanceType()
+    {
+        return $this->danceType;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->dancer = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->danceType = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Set isPro
+     *
+     * @param boolean $isPro
+     * @return DancerDanceType
+     */
+    public function setIsPro($isPro)
+    {
+        $this->isPro = $isPro;
+    
+        return $this;
+    }
+
+    /**
+     * Get isPro
+     *
+     * @return boolean 
+     */
+    public function getIsPro()
+    {
+        return $this->isPro;
+    }
+
+    /**
+     * Add dancer
+     *
+     * @param \DancePark\DancerBundle\Entity\Dancer $dancer
+     * @return DancerDanceType
+     */
+    public function addDancer(\DancePark\DancerBundle\Entity\Dancer $dancer)
+    {
+        $this->dancer[] = $dancer;
+    
+        return $this;
+    }
+
+    /**
+     * Remove dancer
+     *
+     * @param \DancePark\DancerBundle\Entity\Dancer $dancer
+     */
+    public function removeDancer(\DancePark\DancerBundle\Entity\Dancer $dancer)
+    {
+        $this->dancer->removeElement($dancer);
+    }
+
+    /**
+     * Add danceType
+     *
+     * @param \DancePark\CommonBundle\Entity\DanceType $danceType
+     * @return DancerDanceType
+     */
+    public function addDanceType(\DancePark\CommonBundle\Entity\DanceType $danceType)
+    {
+        $this->danceType[] = $danceType;
+    
+        return $this;
+    }
+
+    /**
+     * Remove danceType
+     *
+     * @param \DancePark\CommonBundle\Entity\DanceType $danceType
+     */
+    public function removeDanceType(\DancePark\CommonBundle\Entity\DanceType $danceType)
+    {
+        $this->danceType->removeElement($danceType);
+    }
+}

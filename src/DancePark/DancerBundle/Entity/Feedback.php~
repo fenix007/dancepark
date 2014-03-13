@@ -1,0 +1,334 @@
+<?php
+
+namespace DancePark\DancerBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Feedback
+ *
+ * @ORM\Table(name="feedback")
+ * @ORM\Entity(repositoryClass="DancePark\DancerBundle\Entity\FeedbackRepository")
+ * @ORM\HasLifecycleCallbacks()
+ */
+class Feedback
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="DancePark\OrganizationBundle\Entity\Organization")
+     */
+    private $organization;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="DancePark\CommonBundle\Entity\Place")
+     */
+    private $place;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="DancePark\EventBundle\Entity\Event")
+     */
+    private $event;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="summary", type="string", length=300)
+     * @Assert\Length(max=300, maxMessage="error.length300")
+     */
+    private $summary;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="positive", type="string", length=300, nullable=true)
+     * @Assert\Length(max=300, maxMessage="error.length300")
+     */
+    private $positive;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="negative", type="string", length=300, nullable=true)
+     * @Assert\Length(max=300, maxMessage="error.length300")
+     */
+    private $negative;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="rating", type="integer")
+     */
+    private $rating;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     * @Assert\DateTime(message="error.type.datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime")
+     * @Assert\DateTime(message="error.type.datetime")
+     */
+    private $updatedAt;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="DancePark\DancerBundle\Entity\Dancer", cascade={"all"})
+     */
+    private $dancer;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set organization
+     *
+     * @param integer $organization
+     * @return Feedback
+     */
+    public function setOrganization($organization)
+    {
+        $this->organization = $organization;
+    
+        return $this;
+    }
+
+    /**
+     * Get organization
+     *
+     * @return integer 
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
+    }
+
+    /**
+     * Set place
+     *
+     * @param integer $place
+     * @return Feedback
+     */
+    public function setPlace($place)
+    {
+        $this->place = $place;
+    
+        return $this;
+    }
+
+    /**
+     * Get place
+     *
+     * @return integer 
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
+
+    /**
+     * Set event
+     *
+     * @param integer $evevent
+     * @return Feedback
+     */
+    public function setEvent($evevent)
+    {
+        $this->event = $evevent;
+    
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return integer 
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    /**
+     * Set summary
+     *
+     * @param string $summary
+     * @return Feedback
+     */
+    public function setSummary($summary)
+    {
+        $this->summary = $summary;
+    
+        return $this;
+    }
+
+    /**
+     * Get summary
+     *
+     * @return string 
+     */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
+
+    /**
+     * Set positive
+     *
+     * @param string $positive
+     * @return Feedback
+     */
+    public function setPositive($positive)
+    {
+        $this->positive = $positive;
+    
+        return $this;
+    }
+
+    /**
+     * Get positive
+     *
+     * @return string 
+     */
+    public function getPositive()
+    {
+        return $this->positive;
+    }
+
+    /**
+     * Set negative
+     *
+     * @param string $negative
+     * @return Feedback
+     */
+    public function setNegative($negative)
+    {
+        $this->negative = $negative;
+    
+        return $this;
+    }
+
+    /**
+     * Get negative
+     *
+     * @return string 
+     */
+    public function getNegative()
+    {
+        return $this->negative;
+    }
+
+    /**
+     * Set rating
+     *
+     * @param integer $raiting
+     * @return Feedback
+     */
+    public function setRating($raiting)
+    {
+        $this->rating = $raiting;
+    
+        return $this;
+    }
+
+    /**
+     * Get rating
+     *
+     * @return integer 
+     */
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return Feedback
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return Feedback
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+}

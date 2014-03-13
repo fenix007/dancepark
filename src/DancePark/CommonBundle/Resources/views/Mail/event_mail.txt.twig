@@ -1,0 +1,10 @@
+<p>Новое событие: <a href="{{ path('event_view', {id: event.id}) }}">{{ event.name }}</a></p>
+{% if event.organizations and event.organizations[0] %}
+    <p><a href="{{ path('organization_view', {id: event.organizations[0].id}) }}">{{ event.organizations[0].name }}</a></p>
+{% endif %}
+{% if event.place %}
+    <p>{{ event.place.address }}</p>
+{% endif %}
+{% if digest.hash %}
+    <a href="{{ url('drop_user_digest', {hash: digest.hash}) }}">Отписаться</a>
+{% endif %}

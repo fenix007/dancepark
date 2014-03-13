@@ -1,0 +1,64 @@
+{% extends 'CommonBundle:Default/admin:admin_show.html.twig' %}
+
+
+{% set title = 'label.event.show' %}
+{% set admin = 'admin_event' %}
+
+{% block table_body %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <td>{{ entity.id }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.name'|trans }}</th>
+        <td>{{ entity.name }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.type'|trans }}</th>
+        <td>{{ entity.type }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.dance_type'|trans }}</th>
+        <td>{% for type in entity.danceType %}{{ type }}<br/>{% endfor %}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.kind'|trans }}</th>
+        <td>{{ entity.kind }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.date'|trans }}</th>
+        <td>{{ entity.date|date('Y-m-d') }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.start_time'|trans }}</th>
+        <td>{{ entity.startTime|date('H:i') }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.end_time'|trans }}</th>
+        <td>{{ entity.endTime|date('H:i') }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.price'|trans }}</th>
+        <td>{{ entity.price }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.check_date'|trans }}</th>
+        <td>{{ entity.checkDate|date('Y-m-d H:i:s') }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.children'|trans }}</th>
+        <td>{{ entity.children }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.abonement'|trans }}</th>
+        <td>{{ entity.abonement }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.recommended'|trans }}</th>
+        <td>{{ entity.recommended }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.info_column'|trans }}</th>
+        <td>{{ entity.infoColumn }}</td>
+    </tr>
+{% endblock %}

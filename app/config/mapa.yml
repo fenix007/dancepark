@@ -1,0 +1,8 @@
+mopa_bootstrap:
+    form:
+        collection:
+            widget_remove_btn:
+                icon: trash
+                icon_color: white
+            widget_add_btn:
+                icon: plus-sign

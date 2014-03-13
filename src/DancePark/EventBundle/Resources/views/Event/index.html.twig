@@ -1,0 +1,34 @@
+{% extends 'CommonBundle:Default/admin:admin_index.html.twig' %}
+
+{% set admin = 'admin_event' %}
+{% set title = 'label.event.index' %}
+{% block thead %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <th>{{ 'label.name'|trans }}</th>
+        <th>{{ 'label.kind'|trans }}</th>
+        <th>{{ 'label.date'|trans }}</th>
+        <th>{{ 'label.start_time'|trans }}</th>
+        <th>{{ 'label.end_time'|trans }}</th>
+        <th>{{ 'label.price'|trans }}</th>
+        <th>{{ 'label.check_date'|trans }}</th>
+        <th>{{ 'label.children'|trans }}</th>
+        <th>{{ 'label.abonement'|trans }}</th>
+        <th>{{ 'label.recommended'|trans }}</th>
+        <th>{{ 'label.info_column'|trans }}</th>
+        <th>{{ 'label.actions'|trans }}</th>
+    </tr>
+{% endblock %}
+{% block custom_fields %}
+    <td>{{ entity.name }}</td>
+    <td>{{ entity.kind }}</td>
+    <td>{% if entity.date %}{{ entity.date|date('Y-m-d') }}{% endif %}</td>
+    <td>{{ entity.startTime|date('H:i') }}</td>
+    <td>{{ entity.endTime|date('H:i') }}</td>
+    <td>{{ entity.price }}</td>
+    <td>{% if entity.checkDate %}{{ entity.checkDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+    <td>{{ entity.children }}</td>
+    <td>{{ entity.abonement }}</td>
+    <td>{{ entity.recommended }}</td>
+    <td>{{ entity.infoColumn }}</td>
+{% endblock %}

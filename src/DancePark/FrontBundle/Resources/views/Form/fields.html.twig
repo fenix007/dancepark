@@ -1,0 +1,36 @@
+{% block form_label %}
+    {% if 'checkbox' not in block_prefixes or widget_checkbox_label in ['label', 'both'] %}
+        {% spaceless %}
+            {% if label is not sameas(false) %}
+                {% if label is empty %}
+                    {% set label = name|humanize %}
+                {% endif %}
+                {% if not compound %}
+                    {% set label_attr = label_attr|merge({'for': id}) %}
+                {% endif %}
+                {% set label_attr = label_attr|merge({'class': label_attr.class|default('') ~ ' control-label' ~ (required ? ' required' : ' optional') }) %}
+                <label{% for attrname,attrvalue in label_attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
+                {{ label|trans({}, translation_domain) }}
+                {% if widget_add_btn %}
+                    {{ block('form_widget_add_btn') }}
+                {% endif %}
+                {% if help_label %}
+                    {{ block('help_label') }}
+                {% endif %}
+                {% if help_label_tooltip_title %}
+                    {{ block('help_label_tooltip_title') }}
+                {% endif %}
+                {% if help_label_popover_title %}
+                    {{ block('help_label_popover_title') }}
+                {% endif %}
+                </label>
+            {% endif %}
+        {% endspaceless %}
+    {% endif %}
+{% endblock form_label %}
+
+{% block checkbox_widget %}
+    {% spaceless %}
+        <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
+    {% endspaceless %}
+{% endblock checkbox_widget %}

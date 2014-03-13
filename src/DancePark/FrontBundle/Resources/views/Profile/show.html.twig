@@ -1,0 +1,142 @@
+{% extends 'CommonBundle:Default:layout.html.twig' %}
+
+{% block style_container %}
+    {{ parent() }}
+    {% stylesheets
+    '@FrontBundle/Resources/public/css/*'
+    filter='cssrewrite'
+    output='front.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body_container %}
+    <div id="profile-wrap">
+        <div class="container">
+            {% block left_sidebar %}
+                <div class="profile-left fl-l">
+                    {% if dancer.photo %}
+                        <img src="{{ dancer.webPath|apply_filter('220x220') }}" />
+                    {% endif %}
+                    {% if currentDancer == true %}
+                    <div class="dancer-menu">
+                        <ul>
+                            <li><a href="{{ path('dancer_edit', {id: dancer.id}) }}">{{ 'label.edit_profile'|trans() }}</a></li>
+                        </ul>
+                    </div>
+                    {% endif %}
+                </div>
+            {% endblock %}
+            {% block info_content %}
+                <div class="main-content fl-r">
+                    <div class="info fl-l">
+                    {% block info %}
+                        <div class="title">
+                            <h2>
+                                {{ dancer.firstName }} {{ dancer.lastName }}
+                            </h2>
+                        </div>
+                        {% if dancer.danceType|length > 0 %}
+                            <div class="dance-types">
+                                <span class="title">
+                                    {{ 'label.dance_type'|trans() }}:
+                                </span>
+                                {% for type in dancer.danceType %}
+                                    <span class="item">{{ type.name }}</span>{% if loop.last == false %},{% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        {% if dancer.startToDance %}
+                            <div class="start-to-dance">
+                                <span class="title">{{ 'label.start_to_dance'|trans() }}</span>
+                                {{ dancer.startToDance|date('d') }} {{ dancer.startToDance|date('F')|trans }} {{ dancer.startToDance()|date('Y') }}
+                            </div>
+                        {% endif %}
+                        {% if dancer.danceClub %}
+                            <div class="dance-club">
+                                <span class="title">
+                                    {{ 'label.dance_club'|trans }}
+                                </span>
+                                {{ dancer.danceClub }}
+                            </div>
+                        {% endif %}
+                        <div class="short-overview">
+                            {{ dancer.shortOverview }}
+                        </div>
+                        <div class="short-biography-wrap">
+                            <div class="b-top"></div>
+                            <div class="short-biography">
+                                {% if dancer.biography %}
+                                    {{ dancer.biography }}
+                                {% else %}
+                                    <div class="no-result">
+                                        {{ 'label.no_biography'|trans }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="b-bottom"></div>
+                        </div>
+                    {% endblock %}
+                    </div>
+                    <div class="biograph fl-r">
+                        {% block bigraph %}
+                            <div class="block fl-l">
+                                <div class="masterpice">
+                                    {% if dancer.isPro %}
+                                        {{ 'label.pro'|trans }}
+                                    {% else %}
+                                        {{ 'label.am'|trans }}
+                                    {% endif %}
+                                </div>
+                                {% if dancer.findPartner %}
+                                    <div class="search-parthner">
+                                        {{ 'label.find_partner'|trans }}
+                                    </div>
+                                {% endif %}
+                                {% if dancer.birthday %}
+                                    <div class="birthday">
+                                            {{ 'label.birthday'|trans() }}
+                                            {{ dancer.birthday|date('d') }} {{ dancer.birthday|date('F')|trans }} {{ dancer.birthday()|date('Y') }}
+                                    </div>
+                                {% endif %}
+                                {% if dancer.weight %}
+                                    <div class="dancer-weight">
+                                        {{ 'label.dancer_weight'|trans }}:
+                                        {{ dancer.weight }} {{ 'label.weight_metric'|trans }}
+                                    </div>
+                                {% endif %}
+                                {% if dancer.height %}
+                                    <div class="dancer-height">
+                                        {{ 'label.dancer_height'|trans }}:
+                                        {{ dancer.height }} {{ 'label.height_metric'|trans }}
+                                    </div>
+                                {% endif %}
+                                {% if dancer.email %}
+                                    <div class="email">
+                                        {{ dancer.email }}
+                                    </div>
+                                {% endif %}
+                                <div class="phones">
+                                    {% if dancer.phone1 %}
+                                        <div class="phone">
+                                            {{ dancer.phone1 }}
+                                        </div>
+                                    {% endif %}
+                                    {% if dancer.phone2 %}
+                                        <div class="phone">
+                                            {{ dancer.phone2 }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="cl-b"></div>
+                        {% endblock %}
+                    </div>
+                    <div class="status"></div>
+                </div>
+                <div class="cl-b"></div>
+            {% endblock %}
+        </div>
+    </div> <!-- End profile-wrap -->
+{% endblock %}

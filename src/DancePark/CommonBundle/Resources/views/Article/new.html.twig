@@ -1,0 +1,13 @@
+{% extends 'CommonBundle:Default/admin:admin_new.html.twig' %}
+
+{% set title = 'label.article.new' %}
+{% set admin = 'article' %}
+
+{% block script_container %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            CKEDITOR.replace( 'dancepark_commonbundle_articletype_body' );
+        });
+    </script>
+{% endblock %}

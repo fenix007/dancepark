@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="common.address_group.subscriber" class="DancePark\CommonBundle\EventListener\AddressGroupEventSubscriber">
+            <tag name="doctrine.event_subscriber" />
+        </service>
+        <service id="common.place.subscriber" class="DancePark\CommonBundle\EventListener\Doctrine\PlaceEventSubscriber">
+            <tag name="doctrine.event_subscriber" />
+        </service>
+        <service id="common.article.subscriber" class="DancePark\CommonBundle\EventListener\Doctrine\ArticleEventSubscriber">
+            <argument type="service" id="service_container"/>
+            <tag name="doctrine.event_subscriber" />
+        </service>
+        <service id="gedmo.listener.tree" class="Gedmo\Tree\TreeListener">
+            <tag name="doctrine.event_subscriber" />
+            <call method="setAnnotationReader">
+                <argument type="service" id="annotation_reader" />
+            </call>
+        </service>
+        <service id="common.set_metro_station_subscriber" class="DancePark\CommonBundle\EventListener\SetMetroStationEventSubscriber">
+            <argument type="service" id="doctrine"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <!-- Entity event subscribers -->
+        <service id="common.dance_group_subscriber" class="DancePark\CommonBundle\EventListener\DanceGroupEventSubscriber">
+            <argument type="service" id="doctrine" />
+            <tag name="kernel.event_subscriber"/>
+        </service>
+        <service id="common.dance_type_subscriber" class="DancePark\CommonBundle\EventListener\DanceTypeEventSubscriber">
+            <argument type="service" id="doctrine" />
+            <tag name="kernel.event_subscriber"/>
+        </service>
+        <service id="common.metro_subscriber" class="DancePark\CommonBundle\EventListener\MetroStationEventSubscriber">
+            <argument type="service" id="doctrine" />
+            <tag name="kernel.event_subscriber"/>
+        </service>
+        <service id="common.place_subscriber" class="DancePark\CommonBundle\EventListener\PlaceEventSubscriber">
+            <argument type="service" id="doctrine" />
+            <tag name="kernel.event_subscriber"/>
+        </service>
+        <service id="common.address_level_subscriber" class="DancePark\CommonBundle\EventListener\AddressLevelEventSubscriber">
+            <argument type="service" id="doctrine" />
+            <tag name="kernel.event_subscriber"/>
+        </service>
+        <service id="common.user_autocomplete_by_email" class="DancePark\CommonBundle\EventListener\Form\DancerAutocompleteSubscriber">
+            <argument type="service" id="fos_user.user_manager"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <!-- Form commonly used types -->
+        <service id="common.form.type.ex_date" class="DancePark\CommonBundle\Form\Type\ExtendedDateType">
+            <argument>1960</argument>
+            <tag name="form.type" alias="ex_date"></tag>
+        </service>
+
+        <service id="common.event.date_regular_subscriber" class="DancePark\CommonBundle\EventListener\Form\DateRegularSubscriber">
+            <argument type="service" id="doctrine"/>
+        </service>
+    </services>
+</container>

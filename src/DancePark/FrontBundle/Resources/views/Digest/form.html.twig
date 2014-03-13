@@ -1,0 +1,38 @@
+<div class="digest-form">
+    <form id="digest-form" method="POST" action="{{ path('create_digest') }}">
+        <div id="parameters-group">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#parameters-group" href="#params-container">
+                        {{ 'label.edit_digest'|trans }}
+                    </a>
+                </div>
+                <div id="params-container" class="accordion-body collapse">
+                    <div class="accordion-inner" id="options-bag">
+                        {% for child in form.children %}
+                            {% if not child.vars.required and child.vars.name != '_token' and child.vars.name != 'dancer' %}
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#options-bag" href="#{{ child.vars.id }}-container">
+                                        {{ form_label(child) }}
+                                    </a>
+                                </div>
+                                <div id="{{ child.vars.id }}-container" class="accordion-body collapse">
+                                    <div class="accordion-inner">
+                                        <div class="errors">
+                                            {{ form_errors(child) }}
+                                        </div>
+                                        {{ form_widget(child) }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_rest(form) }}
+        <input type="submit" class="digest_submit" value="{{ 'label.submit'|trans() }}" />
+    </form>
+</div>

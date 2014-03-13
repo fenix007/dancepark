@@ -1,0 +1,50 @@
+{% block events_list_item %}
+    <div class="data-group">
+        <div class="field logo">
+            {% set logoUrl = event.outputLogo %}
+            {% if logoUrl is not null %}
+                <img src="{{ logoUrl|apply_filter('89x47') }}" width="89" height="47" />
+                <div class="shadow"></div>
+            {% endif %}
+        </div>
+        <div class="data"
+             data-id="{{ event.id }}"
+             data-lng="{{ event.longtitude }}"
+             data-lat="{{ event.latitude }}"
+             data-address="{{ event.formattedAddress }}"
+             {% if event.place.phone1 is defined %}
+                 data-phone1="{{ event.place.phone1 }}"
+                 data-phone2="{{ event.place.phone2 }}"
+             {% endif %}
+             data-url="{{ path('event_view', { id: event.id, hash: hash}) }}"
+             {% if event.place.email is defined %}
+                data-email="{{ event.place.email }}"
+             {% endif %}
+             {% if event.place.webUrl is defined %}
+                data-site="{{ event.place.webUrl }}"
+             {% endif %}
+             data-logo="{{ logoUrl }}"
+             {% if event.organizations|length > 0 %}
+                 {% if event.organizations|length > 1 %}
+                     data-org1-url="{{ path('organization_view', { id: event.organizations.get(0).id, hash: hash}) }}"
+                     data-org1-name="{{ event.organizations.get(0).name }}"
+                     data-org2-url="{{ path('organization_view', { id: event.organizations.get(1).id, hash: hash}) }}"
+                     data-org2-name="{{ event.organizations.get(1).name }}"
+                 {% else %}
+                     data-org-name="{{ event.organizations.get(0).name }}"
+                     data-org-url="{{ path('organization_view', { id: event.organizations.get(0).id, hash: hash}) }}"
+                     {% if event.organizations.get(0).places|length > 0 %}
+                         data-org-place1="{{ event.organizations.get(0).places.get(0).formattedAddress }}"
+                         {% if event.organizations.get(0).places|length > 1 %}
+                            data-org-place2="{{ event.organizations.get(0).places.get(1).formattedAddress }}"
+                         {% endif %}
+                     {% endif %}
+                 {% endif %}
+             {% endif %}
+        >
+            <div class="name"><a href="{{ path('event_view', {id: event.id, hash: hash}) }}">{{ event.name }}</a></div>
+            <div class="info">{{ event.shortInfo }}</div>
+            <div class="date">{{ event.outputDate|trans() }}</div>
+        </div>
+    </div>
+{% endblock %}

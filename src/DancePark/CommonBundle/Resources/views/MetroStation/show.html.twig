@@ -1,0 +1,24 @@
+{% extends 'CommonBundle:Default/admin:admin_show.html.twig' %}
+
+
+{% set title = 'label.metro_station.show' %}
+{% set admin = 'metro_station' %}
+
+{% block table_body %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <td>{{ entity.id }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.name'|trans }}</th>
+        <td>{{ entity.name }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.latitude'|trans }}</th>
+        <td>{{ entity.latitude }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.longtitude'|trans }}</th>
+        <td>{{ entity.longtitude }}</td>
+    </tr>
+{% endblock %}

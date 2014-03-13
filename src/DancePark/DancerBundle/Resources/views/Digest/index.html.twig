@@ -1,0 +1,20 @@
+{% extends 'CommonBundle:Default/admin:admin_index.html.twig' %}
+
+{% set admin = 'admin_digest' %}
+{% set title = 'label.digest.index' %}
+{% block thead %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <th>{{ 'label.organization'|trans }}</th>
+        <th>{{ 'label.metro'|trans }}</th>
+        <th>{{ 'label.email'|trans }}</th>
+        <th>{{ 'label.dancer'|trans }}</th>
+        <th>{{ 'label.actions'|trans }}</th>
+    </tr>
+{% endblock %}
+{% block custom_fields %}
+    <td>{% if entity.organization != null %}{{ entity.organization }}{% else %}~{% endif %}</td>
+    <td>{% if entity.metro != null %}{{ entity.metro }}{% else %}~{% endif %}</td>
+    <td>{% if entity.email %}{{ entity.email }}{% else %}{% if entity.dancer %}{{ entity.dancer.email }}{% else %}~{% endif %}{% endif %}</td>
+    <td>{% if entity.dancer %}{{ entity.dancer.firstName }} {{ entity.dancer.lastName }}{% else %}~{% endif %}</td>
+{% endblock %}

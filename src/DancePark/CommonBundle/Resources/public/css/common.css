@@ -1,0 +1,77 @@
+/** Common */
+.fl-l {
+    float: left;
+}
+
+.fl-r {
+    float: right;
+}
+
+.cl-b {
+    clear: both;
+}
+
+.d-none {
+    display: none;
+}
+
+.d-nonei {
+    display: none!important;
+}
+
+.pos-rel {
+    position: relative;
+}
+.pos-abs {
+    position: absolute;
+}
+
+.subs-approved,
+.event-joined,
+.message-notice {
+    background-color: rgba(30, 130, 30, 0.5);
+    color: white;
+    width: 200px;
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.join-error {
+    background-color: rgba(130, 30, 30, 0.5);
+    color: white;
+    width: 200px;
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.login-or-reg a {
+    color: #000000;
+}
+
+.login-or-reg {
+    font-weight: bold;
+}
+
+.login-or-reg .zamok {
+    background-image: url(/files/public/images/commonimg/lock.png);
+    height: 14px;
+    width: 12px;
+    margin-top: 2px;
+    margin-right: 4px;
+}
+
+#messages .message .close {
+    background: url("/files/public/images/common/popup-close-white.png") no-repeat center 0 transparent;
+    height: 14px;
+    width: 14px;
+    border: none;
+}
+
+#messages {
+    position: fixed;
+    top: 10px;
+    width: 200px;
+    z-index: 10000;
+}

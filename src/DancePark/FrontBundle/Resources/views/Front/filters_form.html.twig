@@ -1,0 +1,146 @@
+{% block filters_form %}
+    <div id="filters-container">
+        <div class="filters-container-title"></div>
+        <form id="filter_form" action="" method="post">
+            <div class="refresh-url" data-url="{{ path('get_refreshed_page', {page: 0, hash: ''}) }}"></div>
+            <div class="d-none quick-filter-hidden">
+                {{ form_widget(form.q, {'id': 'quick-filter-hidden'} ) }}
+            </div>
+            <div class="form_top">
+                <div class="address_filter fl-l">
+                    <div id="incorrect-address" class="d-none">
+                        {{ 'label.incorrect_addtress'|trans }}
+                    </div>
+                    <div id="address-filter-container">{{ form_widget(form.address, {attr: {placeholder: 'ПОИСК'} }) }}</div>
+                    {{ form_widget(form.addr_group, {'attr': {'value': null} } ) }}
+                    {{ form_widget(form.correct_address) }}
+                </div>
+                <div class="choose-type-event fl-r">
+                    <div class="children">
+                        {{ form_label(form.children) }}
+                        {{ form_widget(form.children, {attr: {class: 'd-none'} }) }}
+                    </div>
+                    <div class="abonement">
+                        {{ form_label(form.abonement) }}
+                        {{ form_widget(form.abonement, {attr: {class: 'd-none'} }) }}
+                    </div>
+                </div>
+                <div class="cl-b"></div>
+            </div>
+            <div class="sub_top">
+                <div class="date_filter fl-l">
+                    <div class="inputs">
+                        <div class="label-date">{{ 'label.choose_date'|trans() }}</div>
+                        {#{{ form_widget(form.date) }}#}
+                        <div id="form_date"></div>
+                        <div class="pos-abs d-none" id="date_from_container">
+                            <div class="d-none">
+                                {{ form_widget(form.date_from) }}
+                            </div>
+                        </div>
+                        <div class="pos-abs d-none" id="date_to_container">
+                            <div class="d-none">
+                                {{ form_widget(form.date_to) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="links">
+                        {% for name, links in date_links %}
+                            <a href="{{ path("front", {date_from:links.from|date('Y-m-d'), date_to:links.to|date('Y-m-d')}) }}"
+                               data-from="{{ links.from|date('Y-n-j') }}"
+                               data-to="{{ links.to|date('Y-n-j') }}"
+                               class="{% if loop.first %}first{% else %}{% if loop.last %}last{% else %}middle{% endif %}{% endif %}">{{ name|trans() }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="time_filter fl-l">
+                    <div class="inputs">
+                        <div class="label-time">{{ 'label.choose_time'|trans() }}</div>
+                        {#{{ form_widget(form.time) }}#}
+                        <div id="form_time"></div>
+                        <div class="pos-abs d-none" id="time_from_container">
+                            <div class="d-none">
+                                {{ form_widget(form.time_from, {attr: {class: 'd-none'} }) }}
+                            </div>
+                        </div>
+                        <div class="pos-abs d-none" id="time_to_container">
+                            <div class="d-none">
+                                {{ form_widget(form.time_to) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="links">
+                        {% for name, links in time_links %}
+                            <a href="{{ path("front", {time_from:links.from|date('H_i_s'), time_to:links.to|date('H_i_s')}) }}"
+                               data-from="{{ links.from|date('G:i:s') }}"
+                               data-to="{{ links.to|date('G:i:s') }}"
+                               class="{% if loop.first %}first{% else %}{% if loop.last %}last{% else %}middle{% endif %}{% endif %}">{{ name|trans() }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="price_filter fl-l">
+                    <div class="inputs">
+                        <div class="label-time">{{ 'label.choose_price'|trans() }}</div>
+                        {#{{ form_widget(form.time) }}#}
+                        <div id="form_price"></div>
+                        <div class="pos-abs d-none" id="price_from_container">
+                            <div class="d-none">
+                                {{ form_widget(form.price_from, {attr: {class: 'd-none'} }) }}
+                            </div>
+                        </div>
+                        <div class="pos-abs d-none" id="price_to_container">
+                            <div class="d-none">
+                                {{ form_widget(form.price_to) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="links">
+                        {% for name, links in price_links %}
+                            <a href="{{ path("front", { price_from: links.from, price_to: links.to}) }}"
+                               data-from="{{ links.from }}"
+                               data-to="{{ links.to }}"
+                               class="{% if loop.first %}first{% else %}{% if loop.last %}last{% else %}middle{% endif %}{% endif %}">{{ name|trans() }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="cl-b"></div>
+            </div>
+            <div class="event_type_filter">
+                {% for name, group in form.event_types.vars.choices %}
+                    <div class="fl-l group {% if loop.first %}first{% else %}{% if loop.last %}last{% else %}middle{% endif %}{% endif %}">
+                        <div class="event-filter-label"> {{ name|trans() }}</div>
+                        <div class="content">
+                            {% for id, element in group %}
+                                {{ form_row(form.event_types.children[id]) }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="dance_type_filter">
+                {% for name, group in form.dance_types.vars.choices %}
+                    <div class="fl-l group">
+                        <div class="event-filter-label"> {{ name|trans() }}</div>
+                        <div class="content">
+                            {% for id, element in group %}
+                                <div class="fl-l">
+                                    {% if data.dance_types is defined and element.data in data.dance_types %}
+                                        {{ form_row(form.dance_types.children[id], {attr: {checked : 'checked'} } ) }}
+                                    {% else %}
+                                        {{ form_row(form.dance_types.children[id]) }}
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                            <div class="cl-b"></div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="container region_filter fl-l d-none">
+                {{ form_row(form.region) }}
+            </div>
+            {{ form_row(form._token) }}
+            <input type="submit" class="filter-form-submit1 d-none" value="{{ 'Send'|trans() }}" />
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'CommonBundle:Default/admin:admin_show.html.twig' %}
+
+
+{% set title = 'label.date_regular_week.show' %}
+{% set admin = 'admin_dete_regular_week' %}
+
+{% block table_body %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <td>{{ entity.id }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.day_of_week'|trans }}</th>
+        <td>{{ entity.weekDayName|trans }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.start_time'|trans }}</th>
+        <td>{{ entity.startTime|date("H:i:s") }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.end_time'|trans }}</th>
+        <td>{{ entity.endTime|date("H:i:s") }}</td>
+    </tr>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'CommonBundle:Default/admin:admin_show.html.twig' %}
+
+
+{% set title = 'label.event_closing.show' %}
+{% set admin = 'admin_event_closing' %}
+
+{% block table_body %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <td>{{ entity.id }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.begin'|trans }}</th>
+        <td>{{ entity.begin|date('Y-m-d H:i:s') }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.end'|trans }}</th>
+        <td>{{ entity.end|date('Y-m-d H:i:s') }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.reason'|trans }}</th>
+        <td>{{ entity.reason }}</td>
+    </tr>
+{% endblock %}

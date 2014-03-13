@@ -1,0 +1,18 @@
+{% extends 'CommonBundle:Default/admin:admin_index.html.twig' %}
+
+{% set admin = 'date_regular_week' %}
+{% set title = 'label.date_regular_week.index' %}
+{% block thead %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <th>{{ 'label.day_of_week'|trans }}</th>
+        <th>{{ 'label.start_time'|trans }}</th>
+        <th>{{ 'label.end_time'|trans }}</th>
+        <th>{{ 'label.actions'|trans }}</th>
+    </tr>
+{% endblock %}
+{% block custom_fields %}
+    <td>{{ entity.weekDayName|trans }}</td>
+    <td>{{ entity.startTime|date("H:i:s") }}</td>
+    <td>{{ entity.endTime|date("H:i:s") }}</td>
+{% endblock %}

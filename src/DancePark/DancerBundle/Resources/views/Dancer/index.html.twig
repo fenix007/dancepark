@@ -1,0 +1,34 @@
+{% extends 'CommonBundle:Default/admin:admin_index.html.twig' %}
+
+{% set admin = 'admin_dancer' %}
+{% set title = 'label.dancer.index' %}
+{% block thead %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <th>{{ 'label.first_name'|trans }}</th>
+        <th>{{ 'label.last_name'|trans }}</th>
+        <th>{{ 'label.photo'|trans }}</th>
+        <th>{{ 'label.email'|trans }}</th>
+        <th>{{ 'label.enabled'|trans }}</th>
+        <th>{{ 'label.locked'|trans }}</th>
+        <th>{{ 'label.expired'|trans }}</th>
+        <th>{{ 'label.roles'|trans }}</th>
+        <th>{{ 'label.birthday'|trans }}</th>
+        <th>{{ 'label.phone1'|trans }}</th>
+        <th>{{ 'label.ahort_over_view'|trans }}</th>
+        <th>{{ 'label.actions'|trans }}</th>
+    </tr>
+{% endblock %}
+{% block custom_fields %}
+    <td>{{ entity.firstName }}</td>
+    <td>{{ entity.lastName }}</td>
+    <td><img src="{{ entity.webPath }}" width=100 /></td>
+    <td>{{ entity.email }}</td>
+    <td>{{ entity.enabled }}</td>
+    <td>{{ entity.locked }}</td>
+    <td>{{ entity.expired }}</td>
+    <td>{% for role in entity.roles %}{{ role }}</br>{% endfor %}</td>
+    <td>{% if entity.birthday %}{{ entity.birthday|date('Y-m-d H:i:s') }}{% endif %}</td>
+    <td>{{ entity.phone1 }}</td>
+    <td>{{ entity.shortOverview }}</td>
+{% endblock %}

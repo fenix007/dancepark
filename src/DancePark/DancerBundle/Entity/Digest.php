@@ -1,0 +1,523 @@
+<?php
+
+namespace DancePark\DancerBundle\Entity;
+
+use DancePark\EventBundle\Form\EventType;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Digest
+ *
+ * @ORM\Table(name="digest")
+ * @ORM\Entity(repositoryClass="DancePark\DancerBundle\Entity\DigestRepository")
+ */
+class Digest
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="DancePark\OrganizationBundle\Entity\Organization")
+     */
+    private $organization;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToMany(targetEntity="DancePark\EventBundle\Entity\Event")
+     * @ORM\JoinTable(name="digest_event",
+     *      joinColumns={@ORM\JoinColumn(name="digest_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="event_id", referencedColumnName="id")}
+     *  )
+     */
+    private $event;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToMany(targetEntity="DancePark\CommonBundle\Entity\Place")
+     * @ORM\JoinTable(name="digest_place",
+     *      joinColumns={@ORM\JoinColumn(name="digest_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="place_id", referencedColumnName="id")}
+     *  )
+     */
+    private $place;
+
+    /**
+     * @var
+     *
+     * @ORM\ManyToMany(targetEntity="DancePark\CommonBundle\Entity\DanceType")
+     * @ORM\JoinTable(name="digest_dance_type",
+     *      joinColumns={@ORM\JoinColumn(name="digest_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="dance_type_id", referencedColumnName="id")}
+     *  )
+     */
+    private $danceType;
+
+    /**
+     * @var EventType
+     *
+    *  @ORM\ManyToMany(targetEntity="DancePark\EventBundle\Entity\EventType")
+     * @ORM\JoinTable(name="digest_event_type",
+     *      joinColumns={@ORM\JoinColumn(name="digest_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="event_type_id", referencedColumnName="id")}
+     *  )
+     */
+    private $eventType;
+
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="start_time", type="time", nullable=true)
+     * @Assert\Time(message="error.event.start_time")
+     */
+    private $startTime;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="end_time", type="time", nullable=true)
+     * @Assert\Time(message="error.event.end_time")
+     */
+    private $endTime;
+
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_from", type="date", nullable=true)
+     * @Assert\Date(message="error.date")
+     */
+    private $dateFrom;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_to", type="date", nullable=true)
+     * @Assert\Date(message="error.date")
+     */
+    private $dateTo;
+
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="DancePark\CommonBundle\Entity\MetroStation")
+     */
+    private $metro;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     * @Assert\Email(message="error.email");
+     */
+    private $email;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToOne(targetEntity="DancePark\DancerBundle\Entity\Dancer")
+     */
+    private $dancer;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
+     */
+    protected  $address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="digest_hash", type="string", length=255, nullable=true)
+     */
+    protected $hash;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set organization
+     *
+     * @param integer $organization
+     * @return Digest
+     */
+    public function setOrganization($organization)
+    {
+        $this->organization = $organization;
+    
+        return $this;
+    }
+
+    /**
+     * Get organization
+     *
+     * @return integer 
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
+    }
+
+    /**
+     * Set metro
+     *
+     * @param integer $metro
+     * @return Digest
+     */
+    public function setMetro($metro)
+    {
+        $this->metro = $metro;
+    
+        return $this;
+    }
+
+    /**
+     * Get metro
+     *
+     * @return integer 
+     */
+    public function getMetro()
+    {
+        return $this->metro;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Digest
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+
+    /**
+     * Set dancer
+     *
+     * @param \DancePark\DancerBundle\Entity\Dancer $dancer
+     * @return Feedback
+     */
+    public function setDancer( $dancer = null)
+    {
+        $this->dancer = $dancer;
+
+        return $this;
+    }
+
+    /**
+     * Get dancer
+     *
+     * @return \DancePark\DancerBundle\Entity\Dancer
+     */
+    public function getDancer()
+    {
+        return $this->dancer;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->place = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->danceType = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->eventType = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Set startTime
+     *
+     * @param \DateTime $startTime
+     * @return Digest
+     */
+    public function setStartTime($startTime)
+    {
+        $this->startTime = $startTime;
+    
+        return $this;
+    }
+
+    /**
+     * Get startTime
+     *
+     * @return \DateTime 
+     */
+    public function getStartTime()
+    {
+        return $this->startTime;
+    }
+
+    /**
+     * Set endTime
+     *
+     * @param \DateTime $endTime
+     * @return Digest
+     */
+    public function setEndTime($endTime)
+    {
+        $this->endTime = $endTime;
+    
+        return $this;
+    }
+
+    /**
+     * Get endTime
+     *
+     * @return \DateTime 
+     */
+    public function getEndTime()
+    {
+        return $this->endTime;
+    }
+
+    /**
+     * Set dateFrom
+     *
+     * @param \DateTime $dateFrom
+     * @return Digest
+     */
+    public function setDateFrom($dateFrom)
+    {
+        $this->dateFrom = $dateFrom;
+    
+        return $this;
+    }
+
+    /**
+     * Get dateFrom
+     *
+     * @return \DateTime 
+     */
+    public function getDateFrom()
+    {
+        return $this->dateFrom;
+    }
+
+    /**
+     * Set dateTo
+     *
+     * @param \DateTime $dateTo
+     * @return Digest
+     */
+    public function setDateTo($dateTo)
+    {
+        $this->dateTo = $dateTo;
+    
+        return $this;
+    }
+
+    /**
+     * Get dateTo
+     *
+     * @return \DateTime 
+     */
+    public function getDateTo()
+    {
+        return $this->dateTo;
+    }
+
+    /**
+     * Add place
+     *
+     * @param \DancePark\CommonBundle\Entity\Place $place
+     * @return Digest
+     */
+    public function addPlace(\DancePark\CommonBundle\Entity\Place $place)
+    {
+        $this->place[] = $place;
+    
+        return $this;
+    }
+
+    /**
+     * Remove place
+     *
+     * @param \DancePark\CommonBundle\Entity\Place $place
+     */
+    public function removePlace(\DancePark\CommonBundle\Entity\Place $place)
+    {
+        $this->place->removeElement($place);
+    }
+
+    /**
+     * Get place
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
+
+    /**
+     * Add danceType
+     *
+     * @param \DancePark\CommonBundle\Entity\DanceType $danceType
+     * @return Digest
+     */
+    public function addDanceType($danceType)
+    {
+        $this->danceType[] = $danceType;
+    
+        return $this;
+    }
+
+    /**
+     * Remove danceType
+     *
+     * @param \DancePark\CommonBundle\Entity\DanceType $danceType
+     */
+    public function removeDanceType($danceType)
+    {
+        $this->danceType->removeElement($danceType);
+    }
+
+    /**
+     * Get danceType
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDanceType()
+    {
+        return $this->danceType;
+    }
+
+    /**
+     * Add type
+     *
+     * @param \DancePark\EventBundle\Entity\EventType $type
+     * @return Digest
+     */
+    public function addEventType($type)
+    {
+        $this->eventType[] = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Remove type
+     *
+     * @param \DancePark\EventBundle\Entity\EventType $type
+     */
+    public function removeEventType($type)
+    {
+        $this->eventType->removeElement($type);
+    }
+
+    /**
+     * Get type
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEventType()
+    {
+        return $this->eventType;
+    }
+
+    /**
+     * Add event
+     *
+     * @param \DancePark\EventBundle\Entity\Event $event
+     * @return Digest
+     */
+    public function addEvent(\DancePark\EventBundle\Entity\Event $event)
+    {
+        $this->event[] = $event;
+    
+        return $this;
+    }
+
+    /**
+     * Remove event
+     *
+     * @param \DancePark\EventBundle\Entity\Event $event
+     */
+    public function removeEvent(\DancePark\EventBundle\Entity\Event $event)
+    {
+        $this->event->removeElement($event);
+    }
+
+    /**
+     * Get event
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     * @return Digest
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string 
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param string $hash
+     */
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHash()
+    {
+        return $this->hash;
+    }
+}

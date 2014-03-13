@@ -1,0 +1,18 @@
+{% extends 'CommonBundle:Default/admin:admin_layout.html.twig' %}
+
+{% block body_container %}
+    <h1>{{ title|trans() }}</h1>
+
+    <table class="record_properties table table-hover">
+        {% block table_body %}
+        {% endblock %}
+    </table>
+    <div class="">
+        <a href="{{ path(admin) }}" class="btn">
+            {{ 'label.to_list'|trans() }}
+        </a>
+        <a href="{{ path(admin ~ '_edit', { 'id': entity.id }) }}" class="btn btn-success">
+            {{ 'label.edit'|trans() }}
+        </a>
+    </div>
+{% endblock %}

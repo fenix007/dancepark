@@ -1,0 +1,11 @@
+fos_user:
+  db_driver: orm
+  firewall_name: main
+  user_class: DancePark\DancerBundle\Entity\Dancer
+  service:
+    user_manager: dancer.fos.model.user_manager
+  registration:
+    confirmation:
+      enabled: true
+    form:
+     type: dancer_user_registration

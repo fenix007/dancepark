@@ -1,0 +1,16 @@
+{% extends 'CommonBundle:Default/admin:admin_show.html.twig' %}
+
+
+{% set title = 'label.search_keywords.show' %}
+{% set admin = 'search_keywords' %}
+
+{% block table_body %}
+    <tr>
+        <th>{{ 'label.name'|trans() }}</th>
+        <td>{{ entity.name }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.type'|trans() }}</th>
+        <td>{{ entity.typeName }}</td>
+    </tr>
+{% endblock %}

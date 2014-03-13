@@ -1,0 +1,20 @@
+{% extends 'CommonBundle:Default/admin:admin_show.html.twig' %}
+
+
+{% set title = 'label.dancer_event.show' %}
+{% set admin = 'admin_dancer_event' %}
+
+{% block table_body %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <td>{{ entity.id }}</td>
+    </tr>
+    <tr>
+        <th>Date</th>
+        <td>{{ entity.date|date('Y-m-d H:i:s') }}</td>
+    </tr>
+    <tr>
+        <th>Status</th>
+        <td>{{ entity.status }}</td>
+    </tr>
+{% endblock %}

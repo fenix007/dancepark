@@ -1,0 +1,1192 @@
+<?php
+
+namespace DancePark\EventBundle\Entity;
+
+use DancePark\CommonBundle\Entity\AddressGroup;
+use DancePark\CommonBundle\Entity\Place;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ExecutionContext;
+
+/**
+ * Event
+ *
+ * @ORM\Table(name="event")
+ * @ORM\Entity(repositoryClass="DancePark\EventBundle\Entity\EventRepository")
+ * @Assert\Callback(methods={"validateKind"})
+ * @ORM\HasLifecycleCallbacks()
+ */
+class Event
+{
+    const EVENT_KIND_REGULAR = 1;
+    const EVENT_KIND_SINGLE = 2;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="logo", type="string", length=255, nullable=true)
+     * @Assert\Image()
+     */
+    private $logo;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="short_info", type="string", length=255, nullable=true)
+     */
+    private $short_info;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="kind", type="smallint")
+     */
+    private $kind;
+
+    /**
+     * @var EventType
+     *
+     * @ORM\ManyToOne(targetEntity="DancePark\EventBundle\Entity\EventType")
+     */
+    private $type;
+
+    /**
+     * @var
+     *
+     * @ORM\ManyToMany(targetEntity="DancePark\CommonBundle\Entity\DanceType", cascade={"persist"})
+     * @ORM\JoinTable(name="event_dance_type",
+     *      joinColumns={@ORM\JoinColumn(name="event_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="dance_type_id", referencedColumnName="id")}
+     *  )
+     */
+    private $danceType;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="date", nullable=true)
+     * @Assert\Date(message="error.event.date")
+     */
+    private $date;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="start_time", type="time")
+     * @Assert\Time(message="error.event.start_time")
+     */
+    private $startTime;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="end_time", type="time")
+     * @Assert\Time(message="error.event.end_time")
+     */
+    private $endTime;
+
+    /**
+     * @var integer
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="DancePark\EventBundle\Entity\DateRegularWeek",
+     *      mappedBy="event",
+     *      cascade={"persist", "remove", "merge"}
+     *  )
+     */
+    private $dateRegular;
+
+    /**
+     * @var integer
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="DancePark\EventBundle\Entity\EventLessonPrice",
+     *      mappedBy="event",
+     *      cascade={"persist", "remove"}
+     *  )
+     */
+    private $lessonPrices;
+
+    /**
+     * @var Place
+     *
+     * @ORM\ManyToOne(targetEntity="DancePark\CommonBundle\Entity\Place", cascade={"persist"})
+     */
+    private $place;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="price", type="float", nullable=true)
+     * @Assert\Range(
+     *      min=0,
+     *      minMessage="error.event.price"
+     *  )
+     */
+    private $price;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="check_date", type="datetime", nullable=true)
+     * @Assert\DateTime(message="error.event.datetime")
+     */
+    private $checkDate;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="children", type="boolean")
+     */
+    private $children;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="abonement", type="boolean")
+     */
+    private $abonement;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="recommended", type="boolean")
+     */
+    private $recommended;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="info_column", type="text", nullable=true)
+     */
+    private $infoColumn;
+
+    /**
+     * @var integer
+     *
+     * @ORM\ManyToMany(targetEntity="DancePark\OrganizationBundle\Entity\Organization", inversedBy="events")
+     * @ORM\JoinTable(name="event_organization",
+     *      joinColumns={@ORM\JoinColumn(name="place_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="organization_id", referencedColumnName="id")}
+     *  )
+     */
+    private $organizations;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
+     */
+    private $description;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="training", type="boolean", nullable=true)
+     */
+    private $training;
+
+    /**
+     * @var strig
+     *
+     * @ORM\Column(name="teachers", type="text", nullable=true)
+     */
+    private $teachers;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->danceType = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dateRegular = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->lessonPrices = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add danceType
+     *
+     * @param \DancePark\CommonBundle\Entity\DanceType $danceType
+     * @return Event
+     */
+    public function addDanceType($danceType)
+    {
+        $this->danceType[] = $danceType;
+
+        return $this;
+    }
+
+    /**
+     * Remove danceType
+     *
+     * @param \DancePark\CommonBundle\Entity\DanceType $danceType
+     */
+    public function removeDanceType($danceType)
+    {
+        $this->danceType->removeElement($danceType);
+    }
+
+    /**
+     * Get danceType
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDanceType()
+    {
+        return $this->danceType;
+    }
+
+    /**
+     * Add dateRegular
+     *
+     * @param DateRegularWeek $dateRegular
+     * @return Event
+     */
+    public function addDateRegular(DateRegularWeek $dateRegular)
+    {
+        $this->dateRegular[] = $dateRegular;
+
+        return $this;
+    }
+
+    /**
+     * Remove dateRegular
+     *
+     * @param DateRegularWeek $dateRegular
+     */
+    public function removeDateRegular(DateRegularWeek $dateRegular)
+    {
+        $this->dateRegular->removeElement($dateRegular);
+    }
+
+    /**
+     * Get dateRegular
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDateRegular()
+    {
+        return $this->dateRegular;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Event
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set kind
+     *
+     * @param integer $kind
+     * @return Event
+     */
+    public function setKind($kind)
+    {
+        $this->kind = $kind;
+    
+        return $this;
+    }
+
+    /**
+     * Get kind
+     *
+     * @return integer 
+     */
+    public function getKind()
+    {
+        return $this->kind;
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     * @return Event
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return Event
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime 
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set startTime
+     *
+     * @param \DateTime $ststartTime
+     * @return Event
+     */
+    public function setStartTime($ststartTime)
+    {
+        $this->startTime = $ststartTime;
+    
+        return $this;
+    }
+
+    /**
+     * Get startTime
+     *
+     * @return \DateTime 
+     */
+    public function getStartTime()
+    {
+        return $this->startTime;
+    }
+
+    /**
+     * Set endTime
+     *
+     * @param \DateTime $endTime
+     * @return Event
+     */
+    public function setEndTime($endTime)
+    {
+        $this->endTime = $endTime;
+    
+        return $this;
+    }
+
+    /**
+     * Get endTime
+     *
+     * @return \DateTime 
+     */
+    public function getEndTime()
+    {
+        return $this->endTime;
+    }
+
+    /**
+     * Set place
+     *
+     * @param integer $place
+     * @return Event
+     */
+    public function setPlace($place)
+    {
+        $this->place = $place;
+    
+        return $this;
+    }
+
+    /**
+     * Get place
+     *
+     * @return integer 
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
+
+    /**
+     * Set price
+     *
+     * @param float $price
+     * @return Event
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return float 
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set checkDate
+     *
+     * @param \DateTime $checkDate
+     * @return Event
+     */
+    public function setCheckDate($checkDate)
+    {
+        $this->checkDate = $checkDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get checkDate
+     *
+     * @return \DateTime 
+     */
+    public function getCheckDate()
+    {
+        return $this->checkDate;
+    }
+
+    /**
+     * Set children
+     *
+     * @param boolean $children
+     * @return Event
+     */
+    public function setChildren($children)
+    {
+        $this->children = (bool)$children;
+    
+        return $this;
+    }
+
+    /**
+     * Get children
+     *
+     * @return boolean 
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set abonement
+     *
+     * @param boolean $abonement
+     * @return Event
+     */
+    public function setAbonement($abonement)
+    {
+        $this->abonement = (bool)$abonement;
+    
+        return $this;
+    }
+
+    /**
+     * Get abonement
+     *
+     * @return boolean 
+     */
+    public function getAbonement()
+    {
+        return $this->abonement;
+    }
+
+    /**
+     * Set recommended
+     *
+     * @param boolean $recommended
+     * @return Event
+     */
+    public function setRecommended($recommended)
+    {
+        $this->recommended = (bool)$recommended;
+    
+        return $this;
+    }
+
+    /**
+     * Get recommended
+     *
+     * @return boolean 
+     */
+    public function getRecommended()
+    {
+        return $this->recommended;
+    }
+
+    /**
+     * Set infoColumn
+     *
+     * @param string $infoColumn
+     * @return Event
+     */
+    public function setInfoColumn($infoColumn)
+    {
+        $this->infoColumn = $infoColumn;
+    
+        return $this;
+    }
+
+    /**
+     * Get infoColumn
+     *
+     * @return string 
+     */
+    public function getInfoColumn()
+    {
+        return $this->infoColumn;
+    }
+
+    /*********
+     *  HELPER FUNCTIONS
+     *********/
+    /**
+     * Get default event types
+     *
+     * @param bool $keysOnly
+     * @return array
+     */
+    public static function getEventKinds($keysOnly = false)
+    {
+        $kinds = array(
+            Event::EVENT_KIND_REGULAR => 'label.event.kind.regular',
+            Event::EVENT_KIND_SINGLE => 'label.event.kind.single'
+        );
+        if ($keysOnly) {
+            return array_keys($kinds);
+        } else {
+            return $kinds;
+        }
+    }
+
+    /**
+     * @param ExecutionContext $context
+     */
+    public function validateKind(ExecutionContext $context)
+    {
+         if (!in_array($this->getKind(), self::getEventKinds(true))) {
+             $context->addViolationAt('kind', 'error.event.kind', array(), null);
+         }
+    }
+
+    /**
+     *  Get String object representation
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
+     * Add lessonPrices
+     *
+     * @param \DancePark\EventBundle\Entity\EventLessonPrice $lessonPrices
+     * @return Event
+     */
+    public function addLessonPrice(\DancePark\EventBundle\Entity\EventLessonPrice $lessonPrices)
+    {
+        $this->lessonPrices[] = $lessonPrices;
+    
+        return $this;
+    }
+
+    /**
+     * Remove lessonPrices
+     *
+     * @param \DancePark\EventBundle\Entity\EventLessonPrice $lessonPrices
+     */
+    public function removeLessonPrice(\DancePark\EventBundle\Entity\EventLessonPrice $lessonPrices)
+    {
+        $this->lessonPrices->removeElement($lessonPrices);
+    }
+
+    /**
+     * Get lessonPrices
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLessonPrices()
+    {
+        return $this->lessonPrices;
+    }
+
+    /**
+     * @ORM\PrePersist
+     *
+     * Pre persist callback
+     */
+    public function prePersist()
+    {
+        $this->setDefaults();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     *
+     * Pre update callback
+     */
+    public function preUpdate()
+    {
+        $this->setDefaults();
+        $this->checkDate = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreRemove
+     *
+     * Pre remove callback
+     */
+    public function preRemove()
+    {
+        $this->deleteDefaults();
+    }
+
+    /**
+     * Delete defaults
+     */
+    public function deleteDefaults()
+    {
+        if ($this->logo) {
+            @unlink($this->getAbsolutePath());
+        }
+    }
+
+    /**
+     * Get absolute path in system
+     *
+     * @return string
+     */
+    public function getAbsolutePath()
+    {
+        return $this->logo === NULL ? NULL : $this->getUploadRootDir() . ($this->logo instanceof UploadedFile ? NULL :  '/' . $this->logo);
+    }
+
+    /**
+     * Get web path
+     *
+     * @return string
+     */
+    public function getWebPath()
+    {
+        return $this->logo ? $this->getUploadDir() . '/' . $this->logo : NULL;
+    }
+
+    /**
+     * Get upload root directory
+     *
+     * @return string
+     */
+    public function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web' . $this->getUploadDir();
+    }
+
+    /**
+     * Get upload WEB directory
+     *
+     * @return string
+     */
+    public function getUploadDir()
+    {
+        return '/files/public/images/events/logo';
+    }
+
+    /**
+     * Set defaults
+     */
+    public function setDefaults()
+    {
+        if (is_object($this->logo) && $this->logo instanceof UploadedFile) {
+            // Generate path suffix
+            $pathSuffix = date('Y/m/');
+            // Generate file new name
+            $fileNewName = 'b' . '_' . sha1(uniqid(mt_rand(), TRUE)) . '.' . $this->logo->guessExtension();
+
+            // File moving
+            $this->logo->move($this->getAbsolutePath() . '/' . $pathSuffix, $fileNewName);
+            // Set base path
+            $this->logo = $pathSuffix . $fileNewName;
+        }
+    }
+
+    /**
+     * Get logo url for output
+     */
+    public function getOutputLogo()
+    {
+        if (strlen($this->logo) > 0) {
+             return $this->getWebPath();
+        }
+        if ($this->getPlace()) {
+            $placeLogo = $this->getPlace()->getWebPath();
+//            $organization = $this->getPlace()->getOrganizations();
+//            if ($organization && is_object($organization) && $organization->getWebPath()) {
+//                 return $organization->getWebPath();
+//            } else if ($placeLogo) {
+                 return $placeLogo;
+            //}
+        }
+        return null;
+    }
+
+    public function getOrganizationLogo()
+    {
+        if (count($this->getOrganizations()) > 0) {
+            return $this->getOrganizations()->get(0)->getWebPath();
+        }
+        return null;
+    }
+
+    /**
+     * Get longtitude if place exists
+     */
+    public function getLongtitude()
+    {
+        if (!$this->place) {
+            return null;
+        }
+
+        return $this->getPlace()->getLongtitude();
+    }
+
+    /**
+     * Get latitude if place exist
+     */
+    public function getLatitude()
+    {
+        if (!$this->place) {
+            return null;
+        }
+
+        return $this->getPlace()->getLatitude();
+    }
+
+    /**
+     * Get date output text
+     */
+    public function getOutputDate()
+    {
+        $currentDate = new \DateTime();
+        $nextDate = null;
+        $startTime = '';
+        if ($this->getKind() == self::EVENT_KIND_SINGLE) {
+            if ($this->getDate()) {
+                $nextDate = $this->getDate();
+                $diff = $currentDate->diff($nextDate);
+                if ($diff->invert == 0 && $diff->days == 0) {
+                    return 'label.today';
+                } else if ($diff->invert == 0 && $diff->days == 1) {
+                    return 'label.tomorrow';
+                }
+            }
+            if ($this->getStartTime()) {
+                $startTime = $this->getStartTime()->format('h:i');
+            }
+        } else {
+            $nextDay = -1;
+            $currentDay = (int) $currentDate->format('w');
+            $nextDate = new \DateTime();
+            foreach ($this->getDateRegular() as $date) {
+                /** @var $date DateRegularWeek */
+                if ($currentDay == $date->getDayOfWeek()) {
+                    return 'label.today';
+                } else if (($currentDay + 1) == $date->getDayOfWeek()) {
+                    return 'label.tomorrow';
+                } else {
+                    if ($date->getDayOfWeek() - $currentDay > 0 && $date->getDayOfWeek() < $nextDay) {
+                        $nextDay = $date->getDayOfWeek();
+                        if ($date->getStartTime()) {
+                            $startTime = $date->getStartTime()->format('h:i');
+                        } else {
+                            $startTime = '';
+                        }
+                    } else if ($currentDay > $nextDay && ($date->getDayOfWeek() < $nextDay || $nextDay < 1))  {
+                        $nextDay = $date->getDayOfWeek();
+                        if ($date->getStartTime()) {
+                            $startTime = $date->getStartTime()->format('h:i');
+                        } else {
+                            $startTime = '';
+                        }
+                    }
+                }
+            }
+            if ($nextDay < 0) {
+                return '';
+            } else if ($nextDay > $currentDay) {
+                $nextDate->setTimestamp($currentDate->getTimestamp() + ($nextDay - $currentDay) * 24 * 60 * 60);
+            } else {
+                $nextDate->setTimestamp($currentDate->getTimestamp() + (7 - $currentDay + $nextDay) * 24 * 60 * 60);
+            }
+        }
+        if (isset($nextDate) && is_object($nextDate)) {
+            return $nextDate->format('d.m.Y') . ' ' . $startTime;
+        }
+        return null;
+    }
+
+    /**
+     * Get formatted address
+     */
+    public function getFormattedAddress()
+    {
+        /** @var $place Place */
+        $place = $this->getPlace();
+
+        if ($place) {
+            return $place->getFormattedAddress();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Get phone1
+     */
+    public function getPhone1()
+    {
+        if ($this->place) {
+            return $this->getPlace()->getPhone1();
+        }
+        return null;
+    }
+
+    /**
+     * Get phone2
+     */
+    public function getPhone2()
+    {
+        if ($this->place) {
+            return $this->getPlace()->getPhone2();
+        }
+        return null;
+    }
+
+    /**
+     * Get site URL
+     */
+    public function getWebUrl()
+    {
+        if ($this->place) {
+            return $this->getPlace()->getWebUrl();
+        }
+        return null;
+    }
+
+    /**
+     * Get email
+     */
+    public function getEmail()
+    {
+        if ($this->place) {
+            return $this->getPlace()->getEmail();
+        }
+        return null;
+    }
+
+    /**
+     * Set logo
+     *
+     * @param string $logo
+     * @return Event
+     */
+    public function setLogo($logo)
+    {
+        $this->logo = $logo;
+    
+        return $this;
+    }
+
+    /**
+     * Get logo
+     *
+     * @return string 
+     */
+    public function getLogo()
+    {
+        return $this->logo;
+    }
+
+    /**
+     * Set short_info
+     *
+     * @param string $shortInfo
+     * @return Event
+     */
+    public function setShortInfo($shortInfo)
+    {
+        $this->short_info = $shortInfo;
+    
+        return $this;
+    }
+
+    /**
+     * Get short_info
+     *
+     * @return string 
+     */
+    public function getShortInfo()
+    {
+        return $this->short_info;
+    }
+
+    /**
+     * Add organizations
+     *
+     * @param \DancePark\OrganizationBundle\Entity\Organization $organizations
+     * @return Event
+     */
+    public function addOrganization(\DancePark\OrganizationBundle\Entity\Organization $organizations)
+    {
+        $this->organizations[] = $organizations;
+    
+        return $this;
+    }
+
+    /**
+     * Remove organizations
+     *
+     * @param \DancePark\OrganizationBundle\Entity\Organization $organizations
+     */
+    public function removeOrganization(\DancePark\OrganizationBundle\Entity\Organization $organizations)
+    {
+        $this->organizations->removeElement($organizations);
+    }
+
+    /**
+     * Get organizations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getOrganizations()
+    {
+        return $this->organizations;
+    }
+
+    /**
+     * Get work time
+     */
+    public function getWorkTime()
+    {
+        $resultArray = array();
+        if ($this->getKind() == static::EVENT_KIND_SINGLE) {
+            if ($this->date) {
+                $resultArray['single']['labelDate'] = $this->getDate()->format('d m Y');
+            } else {
+                $resultArray['single']['label'] = 'label.at';
+            }
+
+            $resultArray['single']['time'] = '';
+            if ($this->startTime) {
+                $resultArray['single']['time'] .= $this->getStartTime()->format('H:i');
+            } else {
+                $resultArray['single']['time'] .= '...';
+            }
+
+            $resultArray['single']['time'] .= '-';
+
+            if ($this->endTime) {
+                $resultArray['single']['time'] .= $this->getEndTime()->format('H:i');
+            } else {
+                $resultArray['single']['time'] .= '...';
+            }
+
+        } else {
+            if ($this->getDateRegular()->count() > 0) {
+                $daysOfWeek = DateRegularWeek::getDaysOfWeek();
+                foreach ($this->getDateRegular() as $lesson) {
+                    /** @var $lesson DateRegularWeek */
+                    $key = '';
+                    if ($lesson->getStartTime()) {
+                       $key .= $lesson->getStartTime()->format('h:i');
+                    } else {
+                        $key .= '...';
+                    }
+
+                    $key .= '-';
+
+                    if ($lesson->getEndTime()) {
+                        $key .= $lesson->getEndTime()->format('h:i');
+                    } else {
+                        $key .= '...';
+                    }
+                    if($lesson->getDayOfWeek() == 0) {
+                        $lesson->setDayOfWeek(1);
+                    }
+                    $resultArray[$key][$lesson->getDayOfWeek()] = $daysOfWeek[$lesson->getDayOfWeek()] . '_short';
+                }
+                if (is_array($resultArray) && count($resultArray) > 0) {
+                    //try {
+                        foreach ($resultArray as $key => $days) {
+                            $inLine = 0;
+                            ksort($days);
+                            foreach($days as $dayId => $dayName) {
+                                if (isset($days[$dayId - 1])) {
+                                    $inLine++;
+                                } else {
+                                    $inLine = 0;
+                                }
+                                if ($inLine == 2) {
+                                    if ($days[$dayId - 2] == '-') {
+                                        unset($resultArray[$key][$dayId - 2]);
+                                    }
+                                    //} else {
+                                        $resultArray[$key][$dayId - 1] = '-';
+                                    //}
+                                }
+                            }
+                        }
+//                    } catch(\Exception $e) {
+//                        throw $e;
+//                    }
+                }
+            }
+        }
+        return $resultArray;
+    }
+
+    /**
+     * Get lesson prices
+     */
+    public function getPrices()
+    {
+        $resultArray = array();
+
+        if ($this->getKind() == static::EVENT_KIND_SINGLE) {
+            $resultArray['label.price_all_lessons'] = $this->getPrice();
+        } else {
+            foreach ($this->lessonPrices as $lesson) {
+                /** @var $lesson EventLessonPrice */
+                $resultArray[$lesson->getLesson()] = $lesson->getPrice();
+            }
+        }
+
+        return $resultArray;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Event
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set training
+     *
+     * @param boolean $training
+     * @return Event
+     */
+    public function setTraining($training)
+    {
+        $this->training = $training;
+    
+        return $this;
+    }
+
+    /**
+     * Get training
+     *
+     * @return boolean 
+     */
+    public function getTraining()
+    {
+        return $this->training;
+    }
+
+    /**
+     * Set teachers
+     *
+     * @param string $teachers
+     * @return Event
+     */
+    public function setTeachers($teachers)
+    {
+        $this->teachers = $teachers;
+    
+        return $this;
+    }
+
+    /**
+     * Get teachers
+     *
+     * @return string 
+     */
+    public function getTeachers()
+    {
+        return $this->teachers;
+    }
+}

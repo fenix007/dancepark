@@ -1,0 +1,48 @@
+{% extends 'CommonBundle:Default/admin:admin_show.html.twig' %}
+
+
+{% set title = 'label.feedback.show' %}
+{% set admin = 'admin_feedback' %}
+
+{% block table_body %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <td>{{ entity.id }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.organization'|trans }}</th>
+        <td>{% if entity.organization != null %}{{ entity.organization }}{% else %}~{% endif %}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.place'|trans }}</th>
+        <td>{% if entity.place != null %}{{ entity.place }}{% else %}~{% endif %}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.event'|trans }}</th>
+        <td>{% if entity.event != null %}{{ entity.event }}{% else %}~{% endif %}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.summary'|trans }}</th>
+        <td>{{ entity.summary }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.positive'|trans }}</th>
+        <td>{{ entity.positive }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.negative'|trans }}</th>
+        <td>{{ entity.negative }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.rating'|trans }}</th>
+        <td>{{ entity.rating }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.create_dat'|trans }}</th>
+        <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.update_dat'|trans }}</th>
+        <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
+    </tr>
+{% endblock %}

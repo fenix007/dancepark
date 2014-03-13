@@ -1,0 +1,13 @@
+{% extends 'CommonBundle:Default/admin:admin_edit.html.twig' %}
+
+{% block script_container %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            CKEDITOR.replace( 'dancepark_commonbundle_pagetype_text' );
+        });
+    </script>
+{% endblock %}
+
+{% set title = 'label.page.edit' %}
+{% set admin = 'page' %}

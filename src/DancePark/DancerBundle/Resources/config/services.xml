@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- Entity event subscribers -->
+        <service id="dancer.dancer_subscriber" class="DancePark\DancerBundle\EventListener\DancerEventSubscriber">
+            <argument type="service" id="doctrine" />
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <!-- Registration form type -->
+        <service id="dancer.form.type.registration" class="DancePark\DancerBundle\Form\Type\RegistrationFormType">
+            <tag name="form.type" alias="dancer_user_registration" />
+            <argument>%fos_user.model.user.class%</argument>
+        </service>
+
+        <service id="dancer.fos.model.user_manager" class="DancePark\DancerBundle\FOS\Model\UserManager">
+            <argument type="service" id="security.encoder_factory" />
+            <argument type="service" id="fos_user.util.username_canonicalizer" />
+            <argument type="service" id="fos_user.util.email_canonicalizer" />
+            <argument type="service" id="fos_user.entity_manager" />
+            <argument>%fos_user.model.user.class%</argument>
+        </service>
+
+        <service id="dancer.doctrine.event_subscriber" class="DancePark\DancerBundle\EventListener\Doctrine\DancerEventSubscriber">
+            <argument type="service" id="service_container"/>
+            <tag name="doctrine.event_subscriber" />
+        </service>
+        <service id="dancer.dance_type.event_subscriber" class="DancePark\DancerBundle\EventListener\Form\DancerDanceTypeEventSubscriber">
+            <argument type="service" id="doctrine"/>
+        </service>
+    </services>
+</container>

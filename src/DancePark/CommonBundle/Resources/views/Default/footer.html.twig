@@ -1,0 +1,34 @@
+{% block footer %}
+    <div id="upButton"><a id="scrollTop" href="#header"></a></div>
+    <div id="footer">
+        <div class="container">
+            <div class="footer-subscr fl-l">
+                <a class="subscriber-img subscribe-btn" href="{{ path('get_digest_form') }}">{{ 'label.subscribe'|trans() }}</a>
+                <div class="digest_forms"></div>
+                <div class="subs-approved d-none"><span>{{ 'label.subscription_approved'|trans() }}</span></div>
+                <span style="margin-top:5px;">{{ 'label.subscribe_footer'|trans() }}</span>
+                <span style="font-size: 8px; line-height: 9px; color: #838384;">{{ 'label.subscribe_footer_lower'|trans() }}</span>
+            </div>
+            <div class="footer-soc-links fl-l">
+                {% block contact_links %}
+                    {% include 'CommonBundle:Default:contact_links.html.twig' %}
+                {% endblock %}
+            </div>
+            <div class="footer-logo fl-r">
+                <img src="/files/public/images/common/logo-footer.png">
+            </div>
+        </div>
+        <div class="lowerFooter">
+            <div class="container">
+                <ul id="lowerMenu" class="fl-l">
+                    <li><a href="{{ path('page_action', {path: 'about'}) }}">О сайте</a></li>
+                    <li><a href="{{ path('article_list') }}">Новости</a></li>
+                    <li><a href="{{ path('dancers_list') }}">Танцоры</a></li>
+                    <li><a href="{{ path('event_list') }}">Все события</a></li>
+                    <li style="border:none;"><a href="{{ path('event_recommended') }}">Рекомендуемые</a></li>
+                </ul>
+                <div id="copyright" class="fl-r">&copy; 2013 DancePark</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

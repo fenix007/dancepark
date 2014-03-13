@@ -1,0 +1,70 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="iterable.services_bag">DancePark\FrontBundle\Component\ServicesBag\IterableServicesBag</parameter>
+    </parameters>
+
+   <services>
+       <service id="front.twig.extension" class="DancePark\FrontBundle\Twig\Extension\GlobalExtension">
+           <argument type="service" id="services_bag.twig.globals"/>
+           <tag name="twig.extension" />
+       </service>
+
+       <service id="twig_render_info" class="DancePark\FrontBundle\Component\RenderInfo">
+           <argument type="service" id="service_container" />
+           <tag name="twig_global" />
+       </service>
+
+       <!-- Services bag -->
+       <service id="services_bag.filters_container" class="%iterable.services_bag%">
+           <tag name="services_bag" alias="front_filter" />
+       </service>
+       <service id="services_bag.twig.globals" class="%iterable.services_bag%">
+           <tag name="services_bag" alias="twig_global" />
+       </service>
+
+       <!-- Filters -->
+       <service id="front.event_filter.quick" class="DancePark\FrontBundle\Component\EventManager\Filter\Type\QuickFilter">
+           <argument type="service" id="doctrine" />
+           <tag name="front_filter" />
+       </service>
+       <service id="front.event_filter.address" class="DancePark\FrontBundle\Component\EventManager\Filter\Type\AddressFilter">
+           <argument type="service" id="doctrine" />
+           <tag name="front_filter" />
+       </service>
+       <service id="front.event_filter.date" class="DancePark\FrontBundle\Component\EventManager\Filter\Type\DateFilter">
+           <argument type="service" id="doctrine" />
+           <tag name="front_filter" />
+       </service>
+       <service id="front.event_filter.time" class="DancePark\FrontBundle\Component\EventManager\Filter\Type\TimeFilter">
+           <argument type="service" id="doctrine" />
+           <tag name="front_filter" />
+       </service>
+       <service id="front.event_filter.price" class="DancePark\FrontBundle\Component\EventManager\Filter\Type\PriceFilter">
+           <argument type="service" id="doctrine" />
+           <tag name="front_filter" />
+       </service>
+       <service id="front.event_filter.event_types" class="DancePark\FrontBundle\Component\EventManager\Filter\Type\EventTypeFilter">
+           <argument type="service" id="doctrine" />
+           <tag name="front_filter" />
+       </service>
+       <service id="front.event_filter.dance_types" class="DancePark\FrontBundle\Component\EventManager\Filter\Type\DanceTypeFilter">
+           <argument type="service" id="doctrine" />
+           <tag name="front_filter" />
+       </service>
+       <service id="front.event_filter.optional" class="DancePark\FrontBundle\Component\EventManager\Filter\Type\OptionalFilters">
+           <argument type="service" id="doctrine" />
+           <tag name="front_filter" />
+       </service>
+       <service id="front.event_filter.region" class="DancePark\FrontBundle\Component\EventManager\Filter\Type\RegionFilter">
+           <argument type="service" id="doctrine" />
+           <tag name="front_filter" />
+       </service>
+       <service id="front.dance.change_password" class="DancePark\FrontBundle\Form\Type\DancerSecretPasswordEventSubscriber">
+           <argument type="service" id="fos_user.user_manager"/>
+       </service>
+   </services>
+</container>

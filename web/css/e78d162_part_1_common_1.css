@@ -1,0 +1,16 @@
+/** Common */
+.fl-l {
+    float: left;
+}
+
+.fl-r {
+    float: right;
+}
+
+.cl-b {
+    clear: both;
+}
+
+.d-none {
+    display: none;
+}

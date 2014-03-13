@@ -1,0 +1,34 @@
+{% extends 'CommonBundle:Default:layout.html.twig' %}
+
+{% block style_container %}
+    {{ parent() }}
+    {% stylesheets
+    '@FrontBundle/Resources/public/css/*'
+    filter='cssrewrite'
+    output='front.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body_container %}
+    <div class="article-show">
+        <div class="title">
+            <h1>{{ article.title }}</h1>
+        </div>
+        <div class="additional-info">
+            {% if article.organization %}
+                {{ 'label.organization'|trans }}: <a href="{{ path('organization_view', {id: article.organization.id}) }}">{{ article.organization.name }}</a>
+            {% endif %}
+            {% if article.place %}
+                {{ 'label.place'|trans }}: {{ article.place.name }}
+            {% endif %}
+            {% if article.event %}
+                {{ 'label.event'|trans }}<a href="{{ path('event_view', {id: article.event.id}) }}">{{ article.event.name }}</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="body">
+        {{ article.body }}
+    </div>
+{% endblock %}

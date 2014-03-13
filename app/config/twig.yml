@@ -1,0 +1,9 @@
+# Twig Configuration
+twig:
+    form:
+        resources:
+            - 'FrontBundle:Form:fields.html.twig'
+    debug:            %kernel.debug%
+    strict_variables: %kernel.debug%
+    globals:
+        gmap_api_key: AIzaSyCaSKd4euFqLk9sJ6WPwsv-fdEOmZKQ2xI

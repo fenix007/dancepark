@@ -1,0 +1,30 @@
+{% extends 'CommonBundle:Default/admin:admin_index.html.twig' %}
+
+{% set admin = 'admin_feedback' %}
+{% set title = 'label.feedback.index' %}
+{% block thead %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <th>{{ 'label.organization'|trans }}</th>
+        <th>{{ 'label.place'|trans }}</th>
+        <th>{{ 'label.event'|trans }}</th>
+        <th>{{ 'label.summary'|trans }}</th>
+        <th>{{ 'label.positive'|trans }}</th>
+        <th>{{ 'label.negative'|trans }}</th>
+        <th>{{ 'label.rating'|trans }}</th>
+        <th>{{ 'label.create_dat'|trans }}</th>
+        <th>{{ 'label.update_dat'|trans }}</th>
+        <th>{{ 'label.actions'|trans }}</th>
+    </tr>
+{% endblock %}
+{% block custom_fields %}
+    <td>{% if entity.organization != null %}{{ entity.organization }}{% else %}~{% endif %}</td>
+    <td>{% if entity.place != null %}{{ entity.place }}{% else %}~{% endif %}</td>
+    <td>{% if entity.event != null %}{{ entity.event }}{% else %}~{% endif %}</td>
+    <td>{{ entity.summary }}</td>
+    <td>{{ entity.positive }}</td>
+    <td>{{ entity.negative }}</td>
+    <td>{{ entity.rating }}</td>
+    <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+    <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'CommonBundle:Default/admin:admin_show.html.twig' %}
+
+
+{% set title = 'label.dance_type.show' %}
+{% set admin = 'dance_type' %}
+
+{% block table_body %}
+    <tr>
+        <th>{{ 'label.name'|trans() }}</th>
+        <td>{{ entity.name }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.kind'|trans() }}</th>
+        <td>{{ entity.kindLabel|trans }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.dance_group'|trans() }}</th>
+        <td>{% if entity.danceGroup != null %}{{ entity.danceGroup|trans }}{% else %}~{% endif %}</td>
+    </tr>
+{% endblock %}

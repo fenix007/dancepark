@@ -1,0 +1,37 @@
+{% extends 'CommonBundle:Default/admin:admin_new.html.twig' %}
+
+{% block script_container %}
+    {{ parent() }}
+    {% javascripts
+        '@CommonBundle/Resources/public/js/address_service.js'
+        output='address_service.js'
+        %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script src="{{ asset("bundles/mopabootstrap/js/mopabootstrap-collection.js") }}"></script>
+    <script src="{{ asset("bundles/mopabootstrap/js/eyecon-bootstrap-datepicker.js") }}"></script>
+{% endblock %}
+
+{% set title = 'label.place.new' %}
+{% set admin = 'place' %}
+
+{% block body_container %}
+    {{ parent() }}
+{% endblock %}
+
+{% block form_fields %}
+    {{ form_row(form.name) }}
+    {{ form_row(form.city_id) }}
+    {{ form_row(form.addrGroup) }}
+    {{ form_widget(form.address) }}
+    <div class="container coords_container">
+        {% include 'CommonBundle:Place:geocoding.html.twig' %}
+        <div class="latitude">
+            {{ form_row(form.latitude) }}
+        </div>
+        <div class="longtitude">
+            {{ form_row(form.longtitude) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
+{% endblock %}

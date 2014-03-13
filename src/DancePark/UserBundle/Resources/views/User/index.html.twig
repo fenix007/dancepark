@@ -1,0 +1,21 @@
+{% extends 'CommonBundle:Default/admin:admin_index.html.twig' %}
+
+{% set admin = 'admin_user' %}
+{% set title = 'label.user.index' %}
+{% block thead %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <th>{{ 'label.email'|trans }}</th>
+        <th>{{ 'label.enabled'|trans }}</th>
+        <th>{{ 'label.locked'|trans }}</th>
+        <th>{{ 'label.expired'|trans }}</th>
+        <th>{{ 'label.roles'|trans }}</th>
+    </tr>
+{% endblock %}
+{% block custom_fields %}
+    <td>{{ entity.email }}</td>
+    <td>{{ entity.enabled }}</td>
+    <td>{{ entity.locked }}</td>
+    <td>{{ entity.expired }}</td>
+    <td>{% for role in entity.roles %}{{ role }}</br>{% endfor %}</td>
+{% endblock %}

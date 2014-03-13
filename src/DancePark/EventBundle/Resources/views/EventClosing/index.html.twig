@@ -1,0 +1,18 @@
+{% extends 'CommonBundle:Default/admin:admin_index.html.twig' %}
+
+{% set admin = 'admin_event_closing' %}
+{% set title = 'label.event_closing.index' %}
+{% block thead %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <th>{{ 'label.begin'|trans }}</th>
+        <th>{{ 'label.end'|trans }}</th>
+        <th>{{ 'label.reason'|trans }}</th>
+        <th>{{ 'label.actions'|trans }}</th>
+    </tr>
+{% endblock %}
+{% block custom_fields %}
+    <td>{% if entity.begin %}{{ entity.begin|date('Y-m-d H:i:s') }}{% endif %}</td>
+    <td>{% if entity.end %}{{ entity.end|date('Y-m-d H:i:s') }}{% endif %}</td>
+    <td>{{ entity.reason }}</td>
+{% endblock %}

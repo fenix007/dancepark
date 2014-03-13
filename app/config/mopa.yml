@@ -1,0 +1,5 @@
+mopa_bootstrap:
+    form:
+        show_legend: true
+        show_child_legend: true
+        error_type: block

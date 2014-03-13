@@ -1,0 +1,28 @@
+{% if events|length > 0 %}
+    {% block result_list %}
+        <div class="data-list"
+                {% if bounds.northeast is defined  %}
+                    data-top-lat="{{ bounds.northeast.lat }}"
+                    data-bot-lat="{{ bounds.southwest.lat }}"
+                    data-lft-lng="{{ bounds.southwest.lng }}"
+                    data-rgh-lng="{{ bounds.northeast.lng }}"
+                {% else %}
+                    {% if bounds[0] is defined %}
+                        {% for id,bound in bounds %}
+                            data-{{ id }}-lng="{{ bound.lng }}"
+                            data-{{ id }}-lat="{{ bound.lat }}"
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+                >
+            {% include 'FrontBundle:Api:result_list.html.twig' %}
+        </div>
+        {% if is_next %}
+            <div><a id="load-search" class="btn btn-info" href="{{ path('get_next_page', {page: 1, hash: hash}) }}">{{ 'label.load_more'|trans() }}</a></div>
+        {% endif %}
+    {% endblock %}
+{% else %}
+    <div class="block no-result">
+        {{ 'label.no_result'|trans() }}
+    </div>
+{% endif %}

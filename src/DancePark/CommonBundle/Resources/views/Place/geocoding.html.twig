@@ -1,0 +1,31 @@
+{% extends 'CommonBundle:Default/admin:gmap_field.html.twig' %}
+{% block add_functions %}
+    getAddressCoords = function () {
+    var city = $('#dancepark_commonbundle_placetype_city_id option:selected').text();
+    console.log(city);
+    var value = $('#dancepark_commonbundle_placetype_address_address').val();
+    console.log(value);
+    var region = $('#autocompleter_dancepark_commonbundle_placetype_addrGroup').val();
+    console.log(region);
+    value = value.replace(' ', '+');
+
+    $.ajax({
+    url: "http://maps.googleapis.com/maps/api/geocode/json?" +
+    "sensor=false" +
+    "&language=ru" +
+    "&address=" + encodeURI(city) + '+' + encodeURI(region) + '+' + encodeURI(value)
+    }).done(function (data) {
+    if (data.results.length > 0) {
+    var res= data.results[0].geometry.location;
+    placeMarker(new google.maps.LatLng(res.lat, res.lng));
+    setParameters(new google.maps.LatLng(res.lat, res.lng));
+    setCenter(new google.maps.LatLng(res.lat, res.lng));
+    }
+
+    })
+    };
+    $('#dancepark_commonbundle_placetype_city_id').change(getAddressCoords);
+    $('#dancepark_commonbundle_placetype_address_address').change(getAddressCoords);
+    $('#autocompleter_dancepark_commonbundle_placetype_addrGroup').change(getAddressCoords);
+
+{% endblock %}

@@ -1,0 +1,42 @@
+/** Common */
+.fl-l {
+    float: left;
+}
+
+.fl-r {
+    float: right;
+}
+
+.cl-b {
+    clear: both;
+}
+
+.d-none {
+    display: none;
+}
+
+.pos-rel {
+    position: relative;
+}
+.pos-abs {
+    position: absolute;
+}
+
+.subs-approved,
+.event-joined {
+    background-color: rgba(30, 130, 30, 0.5);
+    color: white;
+    width: 200px;
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.join-error {
+    background-color: rgba(130, 30, 30, 0.5);
+    color: white;
+    width: 200px;
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+}

@@ -1,0 +1,20 @@
+{% extends 'CommonBundle:Default/admin:admin_show.html.twig' %}
+
+
+{% set title = 'label.event_lesson_price.show' %}
+{% set admin = 'event_lesson_price' %}
+
+{% block table_body %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <td>{{ entity.id }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.lesson'|trans }}</th>
+        <td>{{ entity.lesson }}</td>
+    </tr>
+    <tr>
+        <th>{{ 'label.price'|trans }}</th>
+        <td>{{ entity.price }}</td>
+    </tr>
+{% endblock %}

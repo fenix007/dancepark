@@ -1,0 +1,16 @@
+{% extends 'CommonBundle:Default/admin:admin_index.html.twig' %}
+
+{% set admin = 'search_keywords' %}
+{% set title = 'label.serch_keywords.index' %}
+{% block thead %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <th>{{ 'label.name'|trans }}</th>
+        <th>{{ 'label.kind'|trans }}</th>
+        <th>{{ 'label.type'|trans() }}</th>
+    </tr>
+{% endblock %}
+{% block custom_fields %}
+    <td>{{ entity.name }}</td>
+    <td>{{ entity.typeName }}</td>
+{% endblock %}

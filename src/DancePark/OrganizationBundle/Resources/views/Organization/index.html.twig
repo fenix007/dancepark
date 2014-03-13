@@ -1,0 +1,32 @@
+{% extends 'CommonBundle:Default/admin:admin_index.html.twig' %}
+
+{% set admin = 'admin_organization' %}
+{% set title = 'label.organization.index' %}
+{% block thead %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <th>{{ 'label.name'|trans }}</th>
+        <th>{{ 'label.logo'|trans }}</th>
+        <th>{{ 'label.type'|trans }}</th>
+        <th>{{ 'label.short_description'|trans }}</th>
+        <th>{{ 'label.description'|trans }}</th>
+        <th>{{ 'label.date_of_incorporation'|trans }}</th>
+        <th>{{ 'label.web_url'|trans }}</th>
+        <th>{{ 'label.phone1'|trans }}</th>
+        <th>{{ 'label.phone2'|trans }}</th>
+        <th>{{ 'label.email'|trans }}</th>
+        <th>{{ 'label.actions'|trans }}</th>
+    </tr>
+{% endblock %}
+{% block custom_fields %}
+    <td>{{ entity.name }}</td>
+    <td><img src="{{ entity.webPath }}" width=100 /></td>
+    <td>{{ entity.type }}</td>
+    <td>{{ entity.shortDescription }}</td>
+    <td>{{ entity.description }}</td>
+    <td>{% if entity.dateOfIncorporation %}{{ entity.dateOfIncorporation|date('Y-m-d H:i:s') }}{% endif %}</td>
+    <td>{{ entity.webUrl }}</td>
+    <td>{{ entity.phone1 }}</td>
+    <td>{{ entity.phone2 }}</td>
+    <td>{{ entity.email }}</td>
+{% endblock %}

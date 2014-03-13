@@ -1,0 +1,18 @@
+{% extends 'CommonBundle:Default/admin:admin_index.html.twig' %}
+
+{% set admin = 'dance_type' %}
+{% set title = 'label.dance_type.index' %}
+{% block thead %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <th>{{ 'label.name'|trans }}</th>
+        <th>{{ 'label.kind'|trans }}</th>
+        <th>{{ 'label.dance_group'|trans() }}</th>
+        <th>{{ 'label.actions'|trans }}</th>
+    </tr>
+{% endblock %}
+{% block custom_fields %}
+    <td>{{ entity.name }}</td>
+    <td>{{ entity.kindLabel|trans }}</td>
+    <td>{% if entity.danceGroup != null %}{{ entity.danceGroup|trans }}{% else %}~{% endif %}</td>
+{% endblock %}

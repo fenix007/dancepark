@@ -1,0 +1,18 @@
+{% extends 'CommonBundle:Default/admin:admin_index.html.twig' %}
+
+{% set admin = 'metro_station' %}
+{% set title = 'label.metro_station.index' %}
+{% block thead %}
+    <tr>
+        <th>{{ 'label.id'|trans }}</th>
+        <th>{{ 'label.name'|trans }}</th>
+        <th>{{ 'label.latitude'|trans }}</th>
+        <th>{{ 'label.longtitude'|trans }}</th>
+        <th>{{ 'label.actions'|trans }}</th>
+    </tr>
+{% endblock %}
+{% block custom_fields %}
+    <td>{{ entity.name }}</td>
+    <td>{{ entity.latitude }}</td>
+    <td>{{ entity.longtitude }}</td>
+{% endblock %}

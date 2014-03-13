@@ -1,0 +1,64 @@
+{% extends 'CommonBundle:Default:layout.html.twig' %}
+{% block script_container %}
+     {{ parent() }}
+     {% javascripts
+         '@FrontBundle/Resources/public/js/profile_edit.js'
+         '@CommonBundle/Resources/public/js/iphone-style-checkboxes.js'
+     %}
+     <script type="text/javascript" charset="utf-8" src="{{ asset_url }}"></script>
+     {% endjavascripts %}
+{% endblock %}
+
+{% block style_container %}
+    {{ parent() }}
+    {% stylesheets
+    '@FrontBundle/Resources/public/css/*'
+    '@CommonBundle/Resources/public/css/iphoneCheckBox.css'
+    filter='cssrewrite'
+    output='front.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body_container %}
+<div id="profile-wrap">
+    <div class="container user-profile edit-profile">
+        {% block info_content %}
+            <div class="dancer-main-content"><div class="left-sidebar fl-l">
+                    <div class="dancer-photo" style="overflow: hidden;">
+                        {% if dancer.photo %}
+                            <img id="dancer-photo" style="position: relative;" src="{{ dancer.webPath|apply_filter('220x220') }}" />
+                        {% endif %}
+                    </div>
+                    {% include 'FrontBundle:Profile:profile_link_block.html.twig' %}
+                </div>
+                <div class="center fl-r">
+                    <form method="POST" action="" class="form-horizontal fl-l" {{ form_enctype(form) }}>
+                        <div class="dancer-email">
+                            {{ dancer.email }}
+                        </div>
+                        <div id="dance-type-dialog" title="{{ 'label.choose_dance_type'|trans() }}"
+                             class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable"
+                             data-add-btn="{{ 'label.add_btn' }}"
+                             data-cansel-btn=btn="{{ 'label.cansel_btn' }}">
+                            <div class="ui-dialog-content ui-widget-content">
+                                {{ form_rest(dance_type_form) }}
+                            </div>
+                        </div>
+                        {{ form_rest(form) }}
+                        <input type="submit" value="{{ 'label.submit'|trans }}" />
+                    </form>
+                    <div id="dance-types-block" class="fl-r">
+                        <div class="title">{{ 'label.dance_styles'|trans }}</div>
+                        <div class="types"></div>
+                        <div class="add-more"><a href="#more">+ {{ 'label.add'|trans }}</a></div>
+                        <div class="rmb d-none">{{ 'label.remove'|trans }}</div>
+                    </div>
+                </div>
+                <div class="cl-b"></div>
+            </div>
+        {% endblock %}
+    </div>
+</div> <!-- End profile-wrap -->
+{% endblock %}

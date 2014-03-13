@@ -1,0 +1,12 @@
+<div class="form-container">
+    <form method="POST" action="{{ url('api_save_feedback', {id: event.id}) }}">
+        <div class="rating">
+            {% for child in feedback_form.rating.children %}
+                {{ form_widget(child, {attr: {class: "star"} }) }}
+            {% endfor %}
+            <div class="cl-b"></div>
+        </div>
+        {{ form_rest(feedback_form) }}
+        <input type="submit" class="feedback-submit" value="{{ 'label.submit'|trans() }}">
+    </form>
+</div>

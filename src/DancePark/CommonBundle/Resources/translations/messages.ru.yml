@@ -1,0 +1,291 @@
+label.id: Ід
+label.name: Название
+label.actions: Действия
+label.latitude: Широта
+label.longtitude: Долгота
+label.kind: 'Тип события'
+label.dance_group: "Категория танцев"
+label.logo: Логотип
+label.address: Адрес
+label.metro: 'Станция метро'
+label.description_togo: Описание
+label.web_url: веб-сайт
+label.phone1: 'Телефон №1:'
+label.phone2: 'Телефон №2:'
+label.email: E-mail
+label.addoptions: Опции
+label.addevent: Событие
+label.description_logo: Описания
+label.weburl: веб-сайт
+Welcome!: 'Добро пожаловать'
+label.edit: Редактировать
+label.to_list: 'К списку'
+label.delete: Удалить
+Create: Создать
+label.admin: Админка
+label.create: Создать
+label.show: Просмотр
+Send: Отправить
+label.subscribe: "Подписаться"
+label.subscribe_slogan: "Будь в курсе всех танцевальных событий!"
+label.subscribe_footer: "Подписаться на рассылку"
+label.subscribe_footer_lower: "Хотите быть в курсе всех танцевальных событий?"
+label.create_event: "Создать событие"
+label.how_work: "Как это работает"
+label.see_profile: Посмотреть профиль
+label.edit_profile: Редактировать профиль
+label.login: "Войти в систему"
+label.or: или
+label.register: "зарегистрироваться"
+label.choose_city: "Выбрать город"
+label.recommended-event-title: 'Рекомендуемые события'
+label.type: Тип
+label.prefix: Префикс
+label.title: Заголовок
+label.body: Текст
+label.event: Событие
+label.organization: Организация
+label.place: Место
+label.dance_type: "Тип танца"
+label.pro: 'Pro'
+label.am: 'Am'
+label.dancer_weight: 'Вес'
+label.weight_metric: 'кг'
+label.dancer_height: 'Рост'
+label.height_metric: 'см'
+label.my_events: 'Мои события'
+label.my_info: 'Личная информация'
+label.remove: 'Удалить'
+label.add: 'добавить стили'
+label.dance_styles: 'Стили танцев'
+label.start_time: 'Время начала'
+label.end_time: 'Время окончания'
+label.price: Цена
+label.children: 'Занятия для детей'
+label.abonement: Абонемент
+label.recommended: Рекомендовать
+label.info_column: 'Информация про событие'
+label.dance_type.index: 'Список направлений танца'
+label.dance_type.edit: 'Редактировать направление танца'
+label.dance_type.show: 'Просмотр направления танца'
+label.dance_type.new: 'Добавить направление танца'
+label.place.index: 'Список мест'
+label.place.edit: 'Редактировать место'
+label.place.show: 'Просмотр места'
+label.place.new: 'Добавить место'
+label.short_description: 'Краткое описание'
+label.description: Описание
+label.date_of_incorporation: 'Дата основания'
+label.first_name: 'Имя:'
+label.last_name: 'Фамилия:'
+label.enabled: Разрешен
+label.password: Пароль
+label.locked: Заблокирован
+label.expired: Подтвержден
+label.roles: Роли
+label.photo: 'Фото:'
+label.birthday: 'День рождения:'
+label.short_overview: 'Краткий обзор:'
+label.secret_question: 'Секретный вопрос'
+label.secret_answer: 'Секретный ответ'
+label.parent: Родитель
+label.address_label: Адресс
+label.dance_group.index: 'Список групп направлений танцев'
+label.dance_group.edit: 'Редактировать группу направлений танцев'
+label.dance_group.show: 'Просмотр группы направлений танцев'
+label.dance_group.new: 'Добавить группу направлений танцев'
+label.url: веб-сайт
+label.add_options: 'Добавить опции'
+label.add_event: 'Добавить событие'
+label.organization.index: 'Список организаций'
+label.organization.edit: 'Редактировать организацию'
+label.organization.show: 'Просмотр организации'
+label.organization.new: 'Добавить организацию'
+label.add_group: 'Добавить группу'
+label.begin: Начало
+label.end: Конец
+label.reason: Основание
+label.status: Статус
+label.biography: 'Биография:'
+label.dancer.index: 'Список танцоров'
+label.dancer.edit: 'Редактировать информации о танцоре'
+label.dancer.show: 'Просмотр информации о танцоре'
+label.dancer.new: 'Добавить информацию о танцоре'
+label.check_date: 'Дата проверки'
+label.lesson: 'Количество уроков'
+label.username: 'Имя пользователя'
+label.ahort_over_view: 'Краткий обзор:'
+label.day_of_week: 'день недели'
+label.lesson_price: 'Цена за урок'
+label.date_regular: 'Регулярно в неделю'
+label.week_day.monday: понедельник
+label.week_day.tuesday: вторник
+label.week_day.wednesday: среда
+label.week_day.thursday: четверг
+label.week_day.friday: пятница
+label.week_day.saturday: суббота
+label.week_day.sunday: воскресенье
+label.event.index: 'Список событий'
+label.event.edit: 'Редактировать событие'
+label.event.show: 'Просмотр события'
+label.event.new: 'Добавить события'
+label.date: Дата
+label.event.kind.regular: Регулярное
+label.event.kind.single: Одиночное
+label.summary: Общее
+label.positive: Достоинства
+label.negative: Недостатки
+label.rating: Рейтинг
+label.create_dat: 'Дата создания'
+label.update_dat: 'Дата обновления'
+label.firstname: Имя
+label.lastname: Фамилия
+label.last_login: 'Последний вход'
+label.short_over_view: 'Краткий обзор:'
+label.dance_type.kind.solo: 'Сольные:'
+label.dance_type.kind.couple: 'Парные:'
+label.date_regular_week.index: 'Список расписаний регулярных событий'
+label.date_regular_week.edit: 'Редактировать рассписание регулярного события'
+label.date_regular_week.show: 'Просмотр расписания регулярного события'
+label.date_regular_week.new: 'Добавить расписания регулярного события'
+label.event_type_group.index: 'Список групп типов событий'
+label.event_type_group.edit: 'Редактировать группу типов событий'
+label.event_type_group.show: 'Просмотр группы типов событий'
+label.event_type_group.new: 'Добавить группу типов событий'
+label.event_lesson_price.index: 'Список плат за урок'
+label.event_lesson_price.edit: 'Редактировать плату за урок'
+label.event_lesson_price.show: 'Просмотр платы за'
+label.event_lesson_price.new: 'Добавить плату за урок'
+label.event_type.index: 'Список типов событий'
+label.event_type.edit: 'Редактировать тип события'
+label.event_type.show: 'Просмотр тип события'
+label.event_type.new: 'Добавить тип события'
+label.event_closing.index: 'Список закрытый событий'
+label.event_closing.edit: 'Редактировать закрытое событие'
+label.event_closing.show: 'Просмотр закрытого события'
+label.event_closing.new: 'Добавить закрытое событие'
+label.feedback.index: 'Список ответов'
+label.feedback.edit: 'Редактировать ответ'
+label.feedback.show: 'Просмотр ответа'
+label.feedback.new: 'Добавить ответ'
+label.digest.index: 'Список подписок'
+label.digest.edit: 'Редактировать подписку'
+label.digest.show: 'Просмотр подписок'
+label.digest.new: 'Добавить подписку'
+label.dancer_event.index: 'Список событий танцоров'
+label.dancer_event.edit: 'Редактировать событие танцора'
+label.dancer_event.show: 'Просмотр событий танцора'
+label.dancer_event.new: 'Добавить событие танцора'
+label.address_group.index: 'Список групп адрессов'
+label.address_group.edit: 'Редактировать группу адрессов'
+label.address_group.show: 'Просмотр группы адрессов'
+label.address_group.new: 'Добавить группу адрессов'
+label.address_level.index: 'Список уровней адресов'
+label.address_level.edit: 'Редактировать уровень адресса'
+label.address_level.show: 'Просмотр уровня адресса'
+label.address_level.new: 'Добавить уровень адресса'
+label.metro_station.index: 'Список станций метро'
+label.metro_station.edit: 'Редактировать станцию метро'
+label.metro_station.show: 'Просмотр станции метро'
+label.metro_station.new: 'Добавить станцию метро'
+label.address_region.index: 'Список регионов адресс'
+label.address_region.edit: 'Редактировать регион адресс'
+label.address_region.show: 'Просмотр региона адресс'
+label.address_region.new: 'Добавить регион адресс'
+label.disco: диско
+label.salsa: сальса
+label.latina: латина
+label.festival: фестиваль
+label.from: От
+label.to: До
+label.date_filter: 'Выберите периуд'
+label.time_filter: 'Выберите время'
+label.price_filter: 'Выберите цену'
+label.search_results: 'Найденые события'
+label.events_today: 'События сегодня'
+label.today: Сегодня
+label.tomorrow: Завтра
+label.weekend: Выходные
+label.by_month: Месяц
+label.by_year: Год
+label.morning: Утро
+label.day: День
+label.evening: Вечер
+label.free: '0'
+label.less5000: '<5000'
+label.greater5000: '>5000'
+label.subscription_approved: "Вы успешно подписались"
+label.event_type: 'Тип события'
+label.date_to: 'От даты'
+label.date_from: 'До даты'
+label.edit_digest: 'Настроить подписку'
+security.login.username: 'Логин'
+security.login.password: 'Пароль'
+security.login.remember_me: 'Запомнить меня'
+security.login.submit: 'Авторизироваться'
+registration.submit: 'Зарегистрироваться'
+label.find_partner: 'В поисках партнера?'
+label.is_pro: 'Уровень'
+label.submit: 'Отправить'
+label.incorrect_addtress: 'Неккоректный адрес'
+label.wonderful: 'Чудесно'
+label.good: 'Хорошо'
+label.normal: 'Нормально'
+label.bad: 'Плохо'
+label.terribly: 'Ужасно'
+label.feedback: 'Написать отзыв'
+label.how_to_get: 'Как добраться до места'
+label.dance_types: 'Типы танца'
+label.work-time: 'Время работы'
+label.lesson-price: 'Цены'
+label.price_all_lessons: 'Цена за каждое занятие'
+label.join_me: 'Принять участие'
+label.back_to_home: 'Вернуться к списку событий'
+label.load_more: 'Подгрузить еще'
+label.week_day.monday: 'Понедельник'
+label.week_day.tuesday: 'Вторник'
+label.week_day.wednesday: 'Среда'
+label.week_day.thursday: 'Четверг'
+label.week_day.friday: 'Пятница'
+label.week_day.saturday: 'Субота'
+label.week_day.sunday: 'Воскресение'
+label.week_day.monday_short: 'Пн'
+label.week_day.tuesday_short: 'Вт'
+label.week_day.wednesday_short: 'Ср'
+label.week_day.thursday_short: 'Чт'
+label.week_day.friday_short: 'Пт'
+label.week_day.saturday_short: 'Сб'
+label.week_day.sunday_short: 'Вс'
+label.lessons_count: 'Занятие'
+label.lessons_count: 'Занятие'
+label.unjoin_event: 'Отписаться'
+label.unjoin_me: 'Отписаться'
+label.event_recommended: 'Рекоммендовано'
+label.dance_club: 'Танцевальные клубы:'
+label.start_to_dance: 'Начал танцевать:'
+January: 'Января'
+February: 'Февраля'
+March: 'Марта'
+Aipril: 'Апреля'
+May: 'Мая'
+June: 'Июня'
+July: 'Июля'
+August: 'Августа'
+September: 'Сентября'
+October: 'Октября'
+November: 'Ноября'
+December: 'Декабря'
+label.teachers: 'Список преподавателей'
+label.training: 'Учебное событие'
+label.choose_dance_type: 'Выберите тип танца'
+label.danceType: 'Стиль танца'
+label.choose_price: 'Выберите цену'
+label.choose_time: 'Выберите время'
+label.choose_date: 'Выберите период'
+label.input_user_name: 'Имя пользователя'
+label.registration: 'регистрация'
+label.success_authorization: 'Ваша учётная запись успешно активирована!'
+label.no_dancer_events: "У вас нет еще событий"
+label.no_result: 'Ненайдено событий'
+label.weight_form: 'Вес'
+label.height_form: 'Рост'
